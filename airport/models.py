@@ -123,20 +123,22 @@ class Route(models.Model):
     source = models.ForeignKey(
         "Airport",
         on_delete=models.CASCADE,
-        related_name="routes"
+        related_name="source_routes"
     )
     destination = models.ForeignKey(
         "Airport",
         on_delete=models.CASCADE,
-        related_name="routes"
+        related_name="destination_routes"
     )
     distance = models.PositiveIntegerField()
 
     class Meta:
-        constraints = CheckConstraint(
-            check=~Q(source=F("destination")),
-            name="check_source_not_equal_destination"
-        )
+        constraints = [
+            CheckConstraint(
+                condition=~Q(source=F("destination")),
+                name="check_source_not_equal_destination"
+            )
+        ]
 
     def __str__(self):
         return f"From {self.source.name} to {self.destination.name}"
