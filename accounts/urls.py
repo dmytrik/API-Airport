@@ -11,7 +11,7 @@ from accounts.views import (
 )
 
 
-app_name = "user"
+app_name = "accounts"
 
 urlpatterns = [
     path("register/", CreateUserView.as_view(), name="create"),

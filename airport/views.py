@@ -24,7 +24,9 @@ from airport.models import (
 
 class OrderViewSet(ModelViewSet):
     serializer_class = OrderSerializer
-    queryset = Order.objects.all()
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user)
 
 
 class TicketViewSet(ModelViewSet):
