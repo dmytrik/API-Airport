@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from airport.models import Flight
-from .route_serializers import RouteSerializer
+from .route_serializers import RouteListDetailSerializer
 from .crew_serializers import CrewSerializer
 from .airplane_serializers import AirplaneListDetailSerializer
 
@@ -15,15 +15,21 @@ class FlightSerializer(serializers.ModelSerializer):
 
 
 class FlightDetailSerializer(FlightSerializer):
-    route = RouteSerializer()
+    route = RouteListDetailSerializer()
     crew = CrewSerializer(many=True)
     airplane = AirplaneListDetailSerializer()
 
 
 class FlightListSerializer(serializers.ModelSerializer):
 
-    city_from = serializers.CharField(source="route.source.closest_big_city")
-    city_to = serializers.CharField(source="route.destination.closest_big_city")
+    city_from = serializers.CharField(
+        source="route.source.closest_big_city",
+        read_only=True
+    )
+    city_to = serializers.CharField(
+        source="route.destination.closest_big_city",
+        read_only=True
+    )
     airplane = serializers.SlugRelatedField(
         read_only=True,
         slug_field="name"

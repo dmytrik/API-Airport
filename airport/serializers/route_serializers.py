@@ -11,6 +11,7 @@ class RouteSerializer(serializers.ModelSerializer):
         fields = ("id", "source", "destination", "distance")
         read_only_fields = ("id",)
 
+
 class RouteListDetailSerializer(RouteSerializer):
     source = AirportSerializer(
         read_only=True
