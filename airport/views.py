@@ -2,6 +2,7 @@ from rest_framework import (
     viewsets,
     mixins,
 )
+from django_filters import rest_framework as filters
 
 from airport.serializers import (
     OrderSerializer,
@@ -27,6 +28,7 @@ from airport.models import (
     AirplaneType,
     Route
 )
+from airport.filters import AirplaneFilter, FlightFilter
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -61,6 +63,8 @@ class TicketViewSet(
 
 
 class FlightViewSet(viewsets.ModelViewSet):
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = FlightFilter
 
     def get_queryset(self):
         return Flight.objects.select_related(
@@ -96,6 +100,8 @@ class AirportViewSet(viewsets.ModelViewSet):
 
 class AirplaneViewSet(viewsets.ModelViewSet):
     queryset = Airplane.objects.select_related("airplane_type")
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AirplaneFilter
 
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
