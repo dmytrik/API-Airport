@@ -3,7 +3,8 @@ from airport.models import (
     Airplane,
     Flight,
     Route,
-    Airport, AirplaneType
+    Airport,
+    AirplaneType
 )
 
 

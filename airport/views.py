@@ -3,6 +3,9 @@ from rest_framework import (
     mixins,
 )
 from django_filters import rest_framework as filters
+from rest_framework.permissions import IsAuthenticated
+
+from airport.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 from airport.serializers import (
     OrderSerializer,
@@ -39,6 +42,7 @@ from airport.filters import (
 
 class OrderViewSet(viewsets.ModelViewSet):
     serializer_class = OrderSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Order.objects.prefetch_related(
@@ -57,6 +61,7 @@ class TicketViewSet(
     viewsets.ReadOnlyModelViewSet
 ):
     serializer_class = TicketSerializer
+    permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
         queryset = Ticket.objects.select_related(
@@ -71,6 +76,7 @@ class TicketViewSet(
 class FlightViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = FlightFilter
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_queryset(self):
         return Flight.objects.select_related(
@@ -97,6 +103,7 @@ class CrewViewSet(
 ):
     serializer_class = CrewSerializer
     queryset = Crew.objects.all()
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class AirportViewSet(viewsets.ModelViewSet):
@@ -104,12 +111,14 @@ class AirportViewSet(viewsets.ModelViewSet):
     queryset = Airport.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = AirportFilter
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class AirplaneViewSet(viewsets.ModelViewSet):
     queryset = Airplane.objects.select_related("airplane_type")
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = AirplaneFilter
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
@@ -122,6 +131,7 @@ class AirplaneTypeViewSet(viewsets.ModelViewSet):
     queryset = AirplaneType.objects.all()
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = AirplaneTypeFilter
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
 
 class RouteViewSet(viewsets.ModelViewSet):
@@ -131,6 +141,7 @@ class RouteViewSet(viewsets.ModelViewSet):
     )
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = RouteFilter
+    permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):
