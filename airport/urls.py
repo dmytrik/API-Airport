@@ -17,14 +17,14 @@ app_name = "airport"
 
 router = routers.DefaultRouter()
 
-router.register("orders", OrderViewSet, basename="orders")
-router.register("tickets", TicketViewSet, basename="tickets")
-router.register("flights", FlightViewSet, basename="flights")
-router.register("airports", AirportViewSet, basename="airports")
-router.register("airplanes", AirplaneViewSet, basename="airplanes")
-router.register("airplane-types", AirplaneTypeViewSet, basename="airplane-types")
+router.register("orders", OrderViewSet, basename="order")
+router.register("tickets", TicketViewSet, basename="ticket")
+router.register("flights", FlightViewSet, basename="flight")
+router.register("airports", AirportViewSet, basename="airport")
+router.register("airplanes", AirplaneViewSet, basename="airplane")
+router.register("airplane-types", AirplaneTypeViewSet, basename="airplane-type")
 router.register("crew", CrewViewSet, basename="crew")
-router.register("routers", RouteViewSet, basename="routers")
+router.register("routers", RouteViewSet, basename="router")
 
 urlpatterns = [
     path("", include(router.urls))

@@ -77,15 +77,11 @@ class FlightViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = FlightFilter
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
-
-    def get_queryset(self):
-        return Flight.objects.select_related(
-            "route__source",
-            "route__destination",
-            "airplane__airplane_type"
-        ).prefetch_related(
-            "crew",
-        )
+    queryset = Flight.objects.select_related(
+        "route__source",
+        "route__destination",
+        "airplane__airplane_type"
+    ).prefetch_related("crew",)
 
     def get_serializer_class(self):
         if self.action == "list":
