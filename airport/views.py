@@ -28,7 +28,13 @@ from airport.models import (
     AirplaneType,
     Route
 )
-from airport.filters import AirplaneFilter, FlightFilter
+from airport.filters import (
+    AirplaneFilter,
+    FlightFilter,
+    RouteFilter,
+    AirportFilter,
+    AirplaneTypeFilter
+)
 
 
 class OrderViewSet(viewsets.ModelViewSet):
@@ -96,6 +102,8 @@ class CrewViewSet(
 class AirportViewSet(viewsets.ModelViewSet):
     serializer_class = AirportSerializer
     queryset = Airport.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AirportFilter
 
 
 class AirplaneViewSet(viewsets.ModelViewSet):
@@ -112,6 +120,8 @@ class AirplaneViewSet(viewsets.ModelViewSet):
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
     serializer_class = AirplaneTypeSerializer
     queryset = AirplaneType.objects.all()
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = AirplaneTypeFilter
 
 
 class RouteViewSet(viewsets.ModelViewSet):
@@ -119,6 +129,8 @@ class RouteViewSet(viewsets.ModelViewSet):
         "source",
         "destination",
     )
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = RouteFilter
 
     def get_serializer_class(self):
         if self.action in ("list", "retrieve"):

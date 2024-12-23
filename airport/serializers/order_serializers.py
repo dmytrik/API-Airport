@@ -19,10 +19,22 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         with transaction.atomic():
-            tickets = validated_data.pop("tickets")
+            tickets_data = validated_data.pop("tickets")
             order = Order.objects.create(**validated_data)
+            tickets = [
+                Ticket(
+                    row=ticket.get("row"),
+                    seat=ticket.get("seat"),
+                    movie_session_id=ticket.get("movie_session"),
+                    order=order
+                )
+                for ticket in tickets_data
+            ]
             for ticket in tickets:
-                Ticket.objects.create(order=order, **ticket)
+                ticket.full_clean()
+
+            Ticket.objects.bulk_create(tickets)
+
             return order
 
 
