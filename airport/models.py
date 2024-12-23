@@ -7,9 +7,10 @@ from django.db.models import (
     Q,
     F
 )
+from base.models import UUIDBaseModel
 
 
-class Order(models.Model):
+class Order(UUIDBaseModel):
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -24,7 +25,7 @@ class Order(models.Model):
         ordering = ["-created_at"]
 
 
-class Ticket(models.Model):
+class Ticket(UUIDBaseModel):
     row = models.PositiveIntegerField()
     seat = models.PositiveIntegerField()
     flight = models.ForeignKey(
@@ -99,7 +100,7 @@ class Ticket(models.Model):
         return f"{str(self.flight)}, row: {self.row}, seat: {self.seat}"
 
 
-class Flight(models.Model):
+class Flight(UUIDBaseModel):
     route = models.ForeignKey(
         "Route",
         on_delete=models.CASCADE,
@@ -122,7 +123,7 @@ class Flight(models.Model):
                 f"arrival time: {self.arrival_time}")
 
 
-class Route(models.Model):
+class Route(UUIDBaseModel):
     source = models.ForeignKey(
         "Airport",
         on_delete=models.CASCADE,
@@ -147,7 +148,7 @@ class Route(models.Model):
         return f"From {self.source.name} to {self.destination.name}"
 
 
-class Airport(models.Model):
+class Airport(UUIDBaseModel):
     name = models.CharField(max_length=63, unique=True)
     closest_big_city = models.CharField(max_length=63)
 
@@ -155,7 +156,7 @@ class Airport(models.Model):
         return self.name
 
 
-class Crew(models.Model):
+class Crew(UUIDBaseModel):
     first_name = models.CharField(max_length=63)
     last_name = models.CharField(max_length=63)
 
@@ -167,7 +168,7 @@ class Crew(models.Model):
         return self.full_name
 
 
-class Airplane(models.Model):
+class Airplane(UUIDBaseModel):
     name = models.CharField(max_length=63)
     rows = models.PositiveIntegerField()
     seats_in_row = models.PositiveIntegerField()
@@ -185,7 +186,7 @@ class Airplane(models.Model):
         return f"{self.name}, type: {self.airplane_type.name}"
 
 
-class AirplaneType(models.Model):
+class AirplaneType(UUIDBaseModel):
     name = models.CharField(max_length=63)
 
     def __str__(self):

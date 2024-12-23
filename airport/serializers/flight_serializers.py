@@ -9,6 +9,15 @@ from .crew_serializers import CrewSerializer
 from .airplane_serializers import AirplaneListDetailSerializer
 
 
+class AvailableSeatsMixin:
+
+    def get_count_available_seats(self, obj):
+        tickets_count = obj.tickets.count()
+        capacity = obj.airplane.capacity
+
+        return capacity - tickets_count
+
+
 class TicketFlightSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -25,7 +34,7 @@ class FlightSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
 
 
-class FlightDetailSerializer(serializers.ModelSerializer):
+class FlightDetailSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
     route = RouteListDetailSerializer(read_only=True)
     crew = CrewSerializer(many=True, read_only=True)
     airplane = AirplaneListDetailSerializer(read_only=True)
@@ -51,14 +60,8 @@ class FlightDetailSerializer(serializers.ModelSerializer):
         serializer = TicketFlightSerializer(tickets, many=True)
         return serializer.data
 
-    def get_count_available_seats(self, obj):
-        tickets_count = obj.tickets.count()
-        capacity = obj.airplane.capacity
 
-        return capacity - tickets_count
-
-
-class FlightListSerializer(serializers.ModelSerializer):
+class FlightListSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
 
     city_from = serializers.CharField(
         source="route.source.closest_big_city",
@@ -92,9 +95,3 @@ class FlightListSerializer(serializers.ModelSerializer):
             "crew"
         )
         read_only_fields = fields
-
-    def get_count_available_seats(self, obj):
-        tickets_count = obj.tickets.count()
-        capacity = obj.airplane.capacity
-
-        return capacity - tickets_count
