@@ -9,6 +9,7 @@ from airport.permissions import IsAdminOrIfAuthenticatedReadOnly
 
 from airport.serializers import (
     OrderSerializer,
+    OrderListSerializer,
     TicketSerializer,
     FlightSerializer,
     FlightListSerializer,
@@ -41,7 +42,6 @@ from airport.filters import (
 
 
 class OrderViewSet(viewsets.ModelViewSet):
-    serializer_class = OrderSerializer
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
@@ -52,6 +52,11 @@ class OrderViewSet(viewsets.ModelViewSet):
             "tickets__flight__crew"
         )
         return queryset.filter(user=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action in ("list", "retrieve"):
+            return OrderListSerializer
+        return OrderSerializer
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)

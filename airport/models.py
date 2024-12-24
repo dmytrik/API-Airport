@@ -37,6 +37,8 @@ class Ticket(UUIDBaseModel):
         Order,
         on_delete=models.CASCADE,
         related_name="tickets",
+        null=True,
+        blank=True
     )
 
     class Meta:

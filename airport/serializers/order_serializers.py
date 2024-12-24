@@ -25,7 +25,7 @@ class OrderSerializer(serializers.ModelSerializer):
                 Ticket(
                     row=ticket.get("row"),
                     seat=ticket.get("seat"),
-                    movie_session_id=ticket.get("movie_session"),
+                    flight=ticket.get("flight"),
                     order=order
                 )
                 for ticket in tickets_data

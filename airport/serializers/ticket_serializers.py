@@ -1,12 +1,11 @@
-from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
-from airport.models import Ticket
-from .flight_serializers import FlightListSerializer
+from airport.models import Ticket, Flight
+
 
 class TicketSerializer(serializers.ModelSerializer):
 
-    flight = FlightListSerializer(many=False, read_only=True)
+    flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
 
     class Meta:
         model = Ticket
@@ -18,7 +17,8 @@ class TicketSerializer(serializers.ModelSerializer):
         Ticket.validate_seat(
             attrs["row"],
             attrs["seat"],
-            attrs["flight"].airplane,
-            ValidationError
+            attrs["flight"].airplane.rows,
+            attrs["flight"].airplane.seats_in_row,
+            serializers.ValidationError
         )
         return data
