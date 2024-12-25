@@ -1,3 +1,5 @@
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from rest_framework import (
     viewsets,
     mixins,
@@ -61,6 +63,10 @@ class OrderViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
 
+    @method_decorator(cache_page(60 * 5, key_prefix="order_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
 class TicketViewSet(
     viewsets.ReadOnlyModelViewSet
@@ -77,6 +83,10 @@ class TicketViewSet(
         ).prefetch_related("flight__crew")
         return queryset.filter(order__user=self.request.user)
 
+    @method_decorator(cache_page(60 * 5, key_prefix="ticket_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
 class FlightViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
@@ -86,7 +96,7 @@ class FlightViewSet(viewsets.ModelViewSet):
         "route__source",
         "route__destination",
         "airplane__airplane_type"
-    ).prefetch_related("crew",)
+    ).prefetch_related("crew", "tickets")
 
     def get_serializer_class(self):
         if self.action == "list":
@@ -95,6 +105,10 @@ class FlightViewSet(viewsets.ModelViewSet):
             return FlightDetailSerializer
 
         return FlightSerializer
+
+    @method_decorator(cache_page(60 * 5, key_prefix="flight_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class CrewViewSet(
@@ -106,6 +120,10 @@ class CrewViewSet(
     queryset = Crew.objects.all()
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
 
+    @method_decorator(cache_page(60 * 5, key_prefix="crew_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
 class AirportViewSet(viewsets.ModelViewSet):
     serializer_class = AirportSerializer
@@ -113,6 +131,10 @@ class AirportViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = AirportFilter
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    @method_decorator(cache_page(60 * 5, key_prefix="airport_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class AirplaneViewSet(viewsets.ModelViewSet):
@@ -126,6 +148,10 @@ class AirplaneViewSet(viewsets.ModelViewSet):
             return AirplaneListDetailSerializer
         return AirplaneSerializer
 
+    @method_decorator(cache_page(60 * 5, key_prefix="airplane_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+
 
 class AirplaneTypeViewSet(viewsets.ModelViewSet):
     serializer_class = AirplaneTypeSerializer
@@ -133,6 +159,10 @@ class AirplaneTypeViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filterset_class = AirplaneTypeFilter
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
+
+    @method_decorator(cache_page(60 * 5, key_prefix="airplane_type_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
 
 
 class RouteViewSet(viewsets.ModelViewSet):
@@ -148,3 +178,7 @@ class RouteViewSet(viewsets.ModelViewSet):
         if self.action in ("list", "retrieve"):
             return RouteListDetailSerializer
         return RouteSerializer
+
+    @method_decorator(cache_page(60 * 5, key_prefix="route_view"))
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)

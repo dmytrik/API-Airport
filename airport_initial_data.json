@@ -677,6 +677,17 @@
         }
     },
     {
+        "model": "accounts.user",
+        "pk": "5700a330191b4b3c835beaf75955fcd6",
+        "fields": {
+            "email": "airport@admin.com",
+            "password": "pbkdf2_sha256$870000$dTiW5JPQi3Lc1wim1oGzRX$UuyjLnMzLmieGTmu5SvDlK5tpLGdtqmowfMzP//Nexw=",
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true
+        }
+    },
+    {
         "model": "airport.order",
         "pk": "c409f242-8777-4eab-bee8-fdd23b39d9c8",
         "fields": {
