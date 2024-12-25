@@ -139,14 +139,22 @@ Follow these steps to set up the project locally:
    ```bash
    python manage.py createsuperuser
 
-6. **Install the redis and run:**
+6. **Create env file:**
+   - `ENVIRONMENT` local
+   - `POSTGRES_PASSWORD` airport 
+   - `POSTGRES_USER` airport
+   - `POSTGRES_DB` airport
+   - `POSTGRES_HOST` db
+   - `POSTGRES_PORT` 5432
+
+7. **Install the redis and run:**
    [Install Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
 
-7. **Initial Data Load:**
+8. **Initial Data Load:**
    ```bash
    python manage.py loaddata airport_initial_data.json
 
-8. **Start the Development Server:**
+9. **Start the Development Server:**
    ```bash
    python manage.py runserver
 
