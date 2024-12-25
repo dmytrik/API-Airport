@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
 from airport.models import Ticket, Flight
 
@@ -11,6 +12,12 @@ class TicketSerializer(serializers.ModelSerializer):
         model = Ticket
         fields = ("id", "row", "seat", "flight")
         read_only_fields = ("id",)
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Ticket.objects.all(),
+                fields=["movie_session", "row", "seat"]
+            )
+        ]
 
     def validate(self, attrs):
         data = super(TicketSerializer, self).validate(attrs=attrs)
