@@ -1,6 +1,6 @@
 # API-Airport service
 
-Welcome to **Airport Management System** — This is a Django-based project that manages airport operations,
+Welcome to **Airport Management System** — This is a Django-Rest-Framework project that manages airport operations,
 including flights, routes, tickets, and crew management.
 It utilizes PostgreSQL for the database and Redis for caching.
 The system is containerized using Docker for ease of setup and deployment.
