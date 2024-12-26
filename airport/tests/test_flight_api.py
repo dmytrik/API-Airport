@@ -1,12 +1,11 @@
 from datetime import datetime
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
 
 from airport.models import Route, Airplane, AirplaneType, Airport, Flight, Crew
 from airport.serializers import FlightListSerializer, FlightDetailSerializer
+from .base_test_class import BaseApiTest
 
 FLIGHT_URL = reverse("airport:flight-list")
 
@@ -15,20 +14,16 @@ def detail_flight_url(id: int):
     return reverse("airport:flight-detail", args=(id,))
 
 
-class UnauthenticatedFlightApiTests(TestCase):
-
-    def setUp(self):
-        self.client = APIClient()
+class UnauthenticatedFlightApiTests(BaseApiTest):
 
     def test_auth_required(self):
         response = self.client.get(FLIGHT_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedFlightApiTest(TestCase):
+class AuthenticatedFlightApiTest(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             email="test@test.com", password="test1234"
         )
@@ -137,10 +132,9 @@ class AuthenticatedFlightApiTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class AdminFlightTests(TestCase):
+class AdminFlightTests(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )

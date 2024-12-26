@@ -1,12 +1,11 @@
 from datetime import datetime
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
 
 from airport.models import AirplaneType, Airplane, Airport, Route, Flight, Ticket, Order
 from airport.serializers import OrderListSerializer
+from .base_test_class import BaseApiTest
 
 
 ORDER_URL = reverse("airport:order-list")
@@ -16,20 +15,16 @@ def get_retrieve_order_url(order_id: int):
     return reverse("airport:order-detail", args=(order_id,))
 
 
-class UnauthenticatedOrderApiTest(TestCase):
-
-    def setUp(self):
-        self.client = APIClient()
+class UnauthenticatedOrderApiTest(BaseApiTest):
 
     def test_auth_required(self):
         response = self.client.get(ORDER_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedOrderApiTests(TestCase):
+class AuthenticatedOrderApiTests(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             email="test@test.com", password="test1234"
         )

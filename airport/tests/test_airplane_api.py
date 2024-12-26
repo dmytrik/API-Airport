@@ -1,11 +1,10 @@
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
 
 from airport.models import Airplane, AirplaneType
 from airport.serializers import AirplaneSerializer, AirplaneListDetailSerializer
+from .base_test_class import BaseApiTest
 
 AIRPLANE_URL = reverse("airport:airplane-list")
 
@@ -14,20 +13,16 @@ def get_retrieve_airplane_url(airplane_id: int):
     return reverse("airport:airplane-detail", args=(airplane_id,))
 
 
-class UnauthenticatedAirplaneApiTest(TestCase):
-
-    def setUp(self):
-        self.client = APIClient()
+class UnauthenticatedAirplaneApiTest(BaseApiTest):
 
     def test_auth_required(self):
         response = self.client.get(AIRPLANE_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedAirplaneApiTest(TestCase):
+class AuthenticatedAirplaneApiTest(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -67,10 +62,9 @@ class AuthenticatedAirplaneApiTest(TestCase):
         self.assertEqual(response.data["results"], serializer.data)
 
 
-class AdminAirplaneTests(TestCase):
+class AdminAirplaneTests(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )

@@ -1,11 +1,11 @@
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
+
 
 from airport.models import Crew
 from airport.serializers import CrewSerializer
+from .base_test_class import BaseApiTest
 
 CREW_URL = reverse("airport:crew-list")
 
@@ -14,20 +14,19 @@ def get_retrieve_crew_url(crew_id: int):
     return reverse("airport:crew-detail", args=(crew_id,))
 
 
-class UnauthenticatedAirporteApiTest(TestCase):
+class UnauthenticatedCrewApiTest(BaseApiTest):
 
-    def setUp(self):
-        self.client = APIClient()
+    # def setUp(self):
+    #     self.client = APIClient()
 
     def test_auth_required(self):
         response = self.client.get(CREW_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedtAirplaneTypeApiTest(TestCase):
+class AuthenticatedtCrewApiTest(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -52,10 +51,9 @@ class AuthenticatedtAirplaneTypeApiTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class AdminAirplaneTests(TestCase):
+class AdminCrewTests(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )

@@ -1,7 +1,5 @@
-from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
-from rest_framework.test import APIClient
 from rest_framework import status
 
 from airport.models import (
@@ -9,6 +7,7 @@ from airport.models import (
     Route,
 )
 from airport.serializers import RouteListDetailSerializer, RouteSerializer
+from .base_test_class import BaseApiTest
 
 ROUTE_URL = reverse("airport:router-list")
 
@@ -17,20 +16,16 @@ def get_retrieve_router_url(router_id: int):
     return reverse("airport:router-detail", args=(router_id,))
 
 
-class UnauthenticatedTicketApiTest(TestCase):
-
-    def setUp(self):
-        self.client = APIClient()
+class UnauthenticatedTicketApiTest(BaseApiTest):
 
     def test_auth_required(self):
         response = self.client.get(ROUTE_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedtOrderApiTest(TestCase):
+class AuthenticatedtOrderApiTest(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -101,10 +96,9 @@ class AuthenticatedtOrderApiTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
-class AdminRouteTests(TestCase):
+class AdminRouteTests(BaseApiTest):
 
     def setUp(self):
-        self.client = APIClient()
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )
