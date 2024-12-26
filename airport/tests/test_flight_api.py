@@ -1,11 +1,19 @@
 from datetime import datetime
+
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
-from airport.models import Route, Airplane, AirplaneType, Airport, Flight, Crew
+from airport.models import (
+    Route,
+    Airplane,
+    AirplaneType,
+    Airport,
+    Flight,
+    Crew
+)
 from airport.serializers import FlightListSerializer, FlightDetailSerializer
-from .base_test_class import BaseApiTest
+from airport.tests.base_test_class import BaseApiTest
 
 FLIGHT_URL = reverse("airport:flight-list")
 

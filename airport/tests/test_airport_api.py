@@ -4,7 +4,7 @@ from rest_framework import status
 
 from airport.models import Airport
 from airport.serializers import AirportSerializer
-from .base_test_class import BaseApiTest
+from airport.tests.base_test_class import BaseApiTest
 
 AIRPORT_URL = reverse("airport:airport-list")
 

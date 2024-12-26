@@ -4,7 +4,7 @@ from rest_framework import status
 
 from airport.models import AirplaneType
 from airport.serializers import AirplaneTypeSerializer
-from .base_test_class import BaseApiTest
+from airport.tests.base_test_class import BaseApiTest
 
 AIRPLANE_TYPE_URL = reverse("airport:airplane-type-list")
 

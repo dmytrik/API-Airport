@@ -2,10 +2,9 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
-
 from airport.models import Crew
 from airport.serializers import CrewSerializer
-from .base_test_class import BaseApiTest
+from airport.tests.base_test_class import BaseApiTest
 
 CREW_URL = reverse("airport:crew-list")
 
@@ -15,9 +14,6 @@ def get_retrieve_crew_url(crew_id: int):
 
 
 class UnauthenticatedCrewApiTest(BaseApiTest):
-
-    # def setUp(self):
-    #     self.client = APIClient()
 
     def test_auth_required(self):
         response = self.client.get(CREW_URL)

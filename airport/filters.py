@@ -1,5 +1,12 @@
 from django_filters import rest_framework as filters
-from airport.models import Airplane, Flight, Route, Airport, AirplaneType
+
+from airport.models import (
+    Airplane,
+    Flight,
+    Route,
+    Airport,
+    AirplaneType
+)
 
 
 class AirplaneFilter(filters.FilterSet):

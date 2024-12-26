@@ -2,12 +2,9 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
-from airport.models import (
-    Airport,
-    Route,
-)
+from airport.models import Airport, Route
 from airport.serializers import RouteListDetailSerializer, RouteSerializer
-from .base_test_class import BaseApiTest
+from airport.tests.base_test_class import BaseApiTest
 
 ROUTE_URL = reverse("airport:router-list")
 
