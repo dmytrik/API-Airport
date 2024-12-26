@@ -1,9 +1,6 @@
 from rest_framework import serializers
 
-from airport.models import (
-    Flight,
-    Ticket
-)
+from airport.models import Flight, Ticket
 from .route_serializers import RouteListDetailSerializer
 from .crew_serializers import CrewSerializer
 from .airplane_serializers import AirplaneListDetailSerializer
@@ -51,7 +48,7 @@ class FlightDetailSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
             "departure_time",
             "arrival_time",
             "crew",
-            "purchased_tickets"
+            "purchased_tickets",
         )
         read_only_fields = ("id",)
 
@@ -64,21 +61,14 @@ class FlightDetailSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
 class FlightListSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
 
     city_from = serializers.CharField(
-        source="route.source.closest_big_city",
-        read_only=True
+        source="route.source.closest_big_city", read_only=True
     )
     city_to = serializers.CharField(
-        source="route.destination.closest_big_city",
-        read_only=True
+        source="route.destination.closest_big_city", read_only=True
     )
-    airplane = serializers.SlugRelatedField(
-        read_only=True,
-        slug_field="name"
-    )
+    airplane = serializers.SlugRelatedField(read_only=True, slug_field="name")
     crew = serializers.SlugRelatedField(
-        many=True,
-        read_only=True,
-        slug_field="full_name"
+        many=True, read_only=True, slug_field="full_name"
     )
     count_available_seats = serializers.SerializerMethodField(read_only=True)
 
@@ -92,6 +82,6 @@ class FlightListSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
             "departure_time",
             "arrival_time",
             "count_available_seats",
-            "crew"
+            "crew",
         )
         read_only_fields = fields

@@ -4,12 +4,11 @@ from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 from rest_framework import status
 
-from airport.models import (
-    AirplaneType
-)
+from airport.models import AirplaneType
 from airport.serializers import AirplaneTypeSerializer
 
 AIRPLANE_TYPE_URL = reverse("airport:airplane-type-list")
+
 
 def get_retrieve_airplane_type_url(airplane_type_id: int):
     return reverse("airport:airplane-type-detail", args=(airplane_type_id,))
@@ -30,13 +29,10 @@ class AuthenticatedtAirplaneTypeApiTest(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = get_user_model().objects.create_user(
-            email="test@mail.com",
-            password="test1234"
+            email="test@mail.com", password="test1234"
         )
         self.client.force_authenticate(self.user)
-        self.airplane_type = AirplaneType.objects.create(
-            name="test_air_type"
-        )
+        self.airplane_type = AirplaneType.objects.create(name="test_air_type")
         self.second_airplane_type = AirplaneType.objects.create(
             name="test_air_type_second"
         )
@@ -56,12 +52,7 @@ class AuthenticatedtAirplaneTypeApiTest(TestCase):
         self.assertEqual(response.data, serializer.data)
 
     def test_filter_airplane_type_by_name(self):
-        response = self.client.get(
-            AIRPLANE_TYPE_URL,
-            {
-                "name": "second"
-            }
-        )
+        response = self.client.get(AIRPLANE_TYPE_URL, {"name": "second"})
         airplane_types = AirplaneType.objects.filter(name__icontains="second")
         serializer = AirplaneTypeSerializer(airplane_types, many=True)
         self.assertEqual(response.data["results"], serializer.data)
@@ -79,8 +70,7 @@ class AdminAirplaneTests(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.admin = get_user_model().objects.create_superuser(
-            email="admin@test.com",
-            password="test1234"
+            email="admin@test.com", password="test1234"
         )
         self.client.force_authenticate(self.admin)
 

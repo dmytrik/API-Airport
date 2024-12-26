@@ -14,8 +14,7 @@ class TicketSerializer(serializers.ModelSerializer):
         read_only_fields = ("id",)
         validators = [
             UniqueTogetherValidator(
-                queryset=Ticket.objects.all(),
-                fields=["movie_session", "row", "seat"]
+                queryset=Ticket.objects.all(), fields=["movie_session", "row", "seat"]
             )
         ]
 
@@ -26,6 +25,6 @@ class TicketSerializer(serializers.ModelSerializer):
             attrs["seat"],
             attrs["flight"].airplane.rows,
             attrs["flight"].airplane.seats_in_row,
-            serializers.ValidationError
+            serializers.ValidationError,
         )
         return data

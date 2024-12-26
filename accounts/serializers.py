@@ -13,7 +13,7 @@ class UserSerializer(serializers.ModelSerializer):
                 "write_only": True,
                 "min_length": 5,
                 "style": {"input_type": "password"},
-                "label": _("Password")
+                "label": _("Password"),
             }
         }
 

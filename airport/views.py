@@ -22,7 +22,7 @@ from airport.serializers import (
     RouteListDetailSerializer,
     AirplaneSerializer,
     AirplaneListDetailSerializer,
-    AirplaneTypeSerializer
+    AirplaneTypeSerializer,
 )
 from airport.models import (
     Order,
@@ -32,14 +32,14 @@ from airport.models import (
     Airport,
     Airplane,
     AirplaneType,
-    Route
+    Route,
 )
 from airport.filters import (
     AirplaneFilter,
     FlightFilter,
     RouteFilter,
     AirportFilter,
-    AirplaneTypeFilter
+    AirplaneTypeFilter,
 )
 
 
@@ -51,7 +51,7 @@ class OrderViewSet(viewsets.ModelViewSet):
             "tickets__flight__route__source",
             "tickets__flight__route__destination",
             "tickets__flight__airplane",
-            "tickets__flight__crew"
+            "tickets__flight__crew",
         )
         return queryset.filter(user=self.request.user)
 
@@ -68,9 +68,7 @@ class OrderViewSet(viewsets.ModelViewSet):
         return super().dispatch(request, *args, **kwargs)
 
 
-class TicketViewSet(
-    viewsets.ReadOnlyModelViewSet
-):
+class TicketViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = TicketSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -79,7 +77,7 @@ class TicketViewSet(
             "flight__route__source",
             "flight__route__destination",
             "flight__airplane",
-            "order"
+            "order",
         ).prefetch_related("flight__crew")
         return queryset.filter(order__user=self.request.user)
 
@@ -93,9 +91,7 @@ class FlightViewSet(viewsets.ModelViewSet):
     filterset_class = FlightFilter
     permission_classes = (IsAdminOrIfAuthenticatedReadOnly,)
     queryset = Flight.objects.select_related(
-        "route__source",
-        "route__destination",
-        "airplane__airplane_type"
+        "route__source", "route__destination", "airplane__airplane_type"
     ).prefetch_related("crew", "tickets")
 
     def get_serializer_class(self):

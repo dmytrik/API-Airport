@@ -1,12 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.conf import settings
-from django.db.models import (
-    UniqueConstraint,
-    CheckConstraint,
-    Q,
-    F
-)
+from django.db.models import UniqueConstraint, CheckConstraint, Q, F
 from base.models import UUIDBaseModel
 
 
@@ -29,33 +24,20 @@ class Ticket(UUIDBaseModel):
     row = models.PositiveIntegerField()
     seat = models.PositiveIntegerField()
     flight = models.ForeignKey(
-        "Flight",
-        on_delete=models.CASCADE,
-        related_name="tickets"
+        "Flight", on_delete=models.CASCADE, related_name="tickets"
     )
     order = models.ForeignKey(
-        Order,
-        on_delete=models.CASCADE,
-        related_name="tickets",
-        null=True,
-        blank=True
+        Order, on_delete=models.CASCADE, related_name="tickets", null=True, blank=True
     )
 
     class Meta:
         constraints = [
-            UniqueConstraint(
-                fields=["row", "seat", "flight"],
-                name="unique_ticket"
-            ),
+            UniqueConstraint(fields=["row", "seat", "flight"], name="unique_ticket"),
         ]
 
     @staticmethod
     def validate_seat(
-            row: int,
-            seat: int,
-            num_rows: int,
-            num_seats: int,
-            error: callable
+        row: int, seat: int, num_rows: int, num_seats: int, error: callable
     ) -> None:
         if not (1 <= row <= num_rows):
             raise error(
@@ -83,7 +65,7 @@ class Ticket(UUIDBaseModel):
             seat=self.seat,
             num_rows=self.flight.airplane.rows,
             num_seats=self.flight.airplane.seats_in_row,
-            error=ValidationError
+            error=ValidationError,
         )
 
     def save(
@@ -94,24 +76,16 @@ class Ticket(UUIDBaseModel):
         update_fields=None,
     ):
         self.full_clean()
-        super(Ticket, self).save(
-            force_insert, force_update, using, update_fields
-        )
+        super(Ticket, self).save(force_insert, force_update, using, update_fields)
 
     def __str__(self):
         return f"{str(self.flight)}, row: {self.row}, seat: {self.seat}"
 
 
 class Flight(UUIDBaseModel):
-    route = models.ForeignKey(
-        "Route",
-        on_delete=models.CASCADE,
-        related_name="flights"
-    )
+    route = models.ForeignKey("Route", on_delete=models.CASCADE, related_name="flights")
     airplane = models.ForeignKey(
-        "Airplane",
-        on_delete=models.CASCADE,
-        related_name="flights"
+        "Airplane", on_delete=models.CASCADE, related_name="flights"
     )
     departure_time = models.DateTimeField()
     arrival_time = models.DateTimeField()
@@ -121,20 +95,18 @@ class Flight(UUIDBaseModel):
         ordering = ["-departure_time"]
 
     def __str__(self):
-        return (f"{str(self.route)}, departure time: {self.departure_time}"
-                f"arrival time: {self.arrival_time}")
+        return (
+            f"{str(self.route)}, departure time: {self.departure_time}"
+            f"arrival time: {self.arrival_time}"
+        )
 
 
 class Route(UUIDBaseModel):
     source = models.ForeignKey(
-        "Airport",
-        on_delete=models.CASCADE,
-        related_name="source_routes"
+        "Airport", on_delete=models.CASCADE, related_name="source_routes"
     )
     destination = models.ForeignKey(
-        "Airport",
-        on_delete=models.CASCADE,
-        related_name="destination_routes"
+        "Airport", on_delete=models.CASCADE, related_name="destination_routes"
     )
     distance = models.PositiveIntegerField()
 
@@ -142,7 +114,7 @@ class Route(UUIDBaseModel):
         constraints = [
             CheckConstraint(
                 condition=~Q(source=F("destination")),
-                name="check_source_not_equal_destination"
+                name="check_source_not_equal_destination",
             )
         ]
 
@@ -175,9 +147,7 @@ class Airplane(UUIDBaseModel):
     rows = models.PositiveIntegerField()
     seats_in_row = models.PositiveIntegerField()
     airplane_type = models.ForeignKey(
-        "AirplaneType",
-        on_delete=models.CASCADE,
-        related_name="airplanes"
+        "AirplaneType", on_delete=models.CASCADE, related_name="airplanes"
     )
 
     @property

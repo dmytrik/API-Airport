@@ -2,6 +2,7 @@ from rest_framework import serializers
 
 from airport.models import Airplane
 
+
 class AirplaneSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -11,7 +12,4 @@ class AirplaneSerializer(serializers.ModelSerializer):
 
 
 class AirplaneListDetailSerializer(AirplaneSerializer):
-    airplane_type = serializers.CharField(
-        source="airplane_type.name",
-        read_only=True
-    )
+    airplane_type = serializers.CharField(source="airplane_type.name", read_only=True)

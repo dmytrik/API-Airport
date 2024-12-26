@@ -5,10 +5,7 @@ from rest_framework_simplejwt.views import (
     TokenVerifyView,
 )
 
-from accounts.views import (
-    CreateUserView,
-    ManageUserView
-)
+from accounts.views import CreateUserView, ManageUserView
 
 
 app_name = "accounts"
