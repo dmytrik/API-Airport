@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     # custom apps
     "airport",
     "accounts",
+    "management",
     "base"
 ]
 

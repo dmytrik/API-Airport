@@ -6,11 +6,11 @@ from airport.models import Airplane, AirplaneType
 from airport.serializers import AirplaneSerializer, AirplaneListDetailSerializer
 from airport.tests.base_test_class import BaseApiTest
 
-AIRPLANE_URL = reverse("airport:airplane-list")
+AIRPLANE_URL = reverse("airport:airplanes-list")
 
 
 def get_retrieve_airplane_url(airplane_id: int):
-    return reverse("airport:airplane-detail", args=(airplane_id,))
+    return reverse("airport:airplanes-detail", args=(airplane_id,))
 
 
 class UnauthenticatedAirplaneApiTest(BaseApiTest):

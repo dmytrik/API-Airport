@@ -4,22 +4,22 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
+from airport.tests.base_test_class import BaseApiTest
 from airport.models import (
     Route,
     Airplane,
     AirplaneType,
     Airport,
-    Flight,
     Crew
 )
-from airport.serializers import FlightListSerializer, FlightDetailSerializer
-from airport.tests.base_test_class import BaseApiTest
+from management.models import Flight
+from management.serializers import FlightListSerializer, FlightDetailSerializer
 
-FLIGHT_URL = reverse("airport:flight-list")
+FLIGHT_URL = reverse("management:flights-list")
 
 
 def detail_flight_url(id: int):
-    return reverse("airport:flight-detail", args=(id,))
+    return reverse("management:flights-detail", args=(id,))
 
 
 class UnauthenticatedFlightApiTests(BaseApiTest):

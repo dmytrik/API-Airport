@@ -6,11 +6,11 @@ from airport.models import Crew
 from airport.serializers import CrewSerializer
 from airport.tests.base_test_class import BaseApiTest
 
-CREW_URL = reverse("airport:crew-list")
+CREW_URL = reverse("airport:crews-list")
 
 
 def get_retrieve_crew_url(crew_id: int):
-    return reverse("airport:crew-detail", args=(crew_id,))
+    return reverse("airport:crews-detail", args=(crew_id,))
 
 
 class UnauthenticatedCrewApiTest(BaseApiTest):

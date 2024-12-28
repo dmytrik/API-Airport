@@ -1,9 +1,17 @@
+from django.db import transaction
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
 
-from airport.models import Flight, Ticket
-from .route_serializers import RouteListDetailSerializer
-from .crew_serializers import CrewSerializer
-from .airplane_serializers import AirplaneListDetailSerializer
+from management.models import (
+    Ticket,
+    Flight,
+    Order
+)
+from airport.serializers import (
+    RouteListDetailSerializer,
+    CrewSerializer,
+    AirplaneListDetailSerializer
+)
 
 
 class AvailableSeatsMixin:
@@ -85,3 +93,63 @@ class FlightListSerializer(AvailableSeatsMixin, serializers.ModelSerializer):
             "crew",
         )
         read_only_fields = fields
+
+
+class TicketSerializer(serializers.ModelSerializer):
+
+    flight = serializers.PrimaryKeyRelatedField(queryset=Flight.objects.all())
+
+    class Meta:
+        model = Ticket
+        fields = ("id", "row", "seat", "flight")
+        read_only_fields = ("id",)
+        validators = [
+            UniqueTogetherValidator(
+                queryset=Ticket.objects.all(), fields=["flight", "row", "seat"]
+            )
+        ]
+
+    def validate(self, attrs):
+        data = super(TicketSerializer, self).validate(attrs=attrs)
+        Ticket.validate_seat(
+            attrs["row"],
+            attrs["seat"],
+            attrs["flight"].airplane.rows,
+            attrs["flight"].airplane.seats_in_row,
+            serializers.ValidationError,
+        )
+        return data
+
+
+class OrderSerializer(serializers.ModelSerializer):
+
+    tickets = TicketSerializer(many=True, read_only=False, allow_empty=False)
+
+    class Meta:
+        model = Order
+        fields = ("id", "created_at", "tickets")
+        read_only_fields = ("id",)
+
+    def create(self, validated_data):
+        with transaction.atomic():
+            tickets_data = validated_data.pop("tickets")
+            order = Order.objects.create(**validated_data)
+            tickets = [
+                Ticket(
+                    row=ticket.get("row"),
+                    seat=ticket.get("seat"),
+                    flight=ticket.get("flight"),
+                    order=order,
+                )
+                for ticket in tickets_data
+            ]
+            for ticket in tickets:
+                ticket.full_clean()
+
+            Ticket.objects.bulk_create(tickets)
+
+            return order
+
+
+class OrderListSerializer(OrderSerializer):
+    tickets = TicketSerializer(many=True, read_only=True)

@@ -4,38 +4,39 @@ from django.urls import reverse
 from django.contrib.auth import get_user_model
 from rest_framework import status
 
+from airport.tests.base_test_class import BaseApiTest
 from airport.models import (
     AirplaneType,
     Airplane,
     Airport,
     Route,
-    Flight,
-    Ticket,
-    Order
 )
-from airport.serializers import OrderListSerializer
-from airport.tests.base_test_class import BaseApiTest
+from management.models import (
+    Flight,
+    Order,
+    Ticket
+)
+from management.serializers import TicketSerializer
+
+TICKET_URL = reverse("management:tickets-list")
 
 
-ORDER_URL = reverse("airport:order-list")
+def get_retrieve_ticket_url(ticket_id: int):
+    return reverse("management:tickets-detail", args=(ticket_id,))
 
 
-def get_retrieve_order_url(order_id: int):
-    return reverse("airport:order-detail", args=(order_id,))
-
-
-class UnauthenticatedOrderApiTest(BaseApiTest):
+class UnauthenticatedTicketApiTest(BaseApiTest):
 
     def test_auth_required(self):
-        response = self.client.get(ORDER_URL)
+        response = self.client.get(TICKET_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
-class AuthenticatedOrderApiTests(BaseApiTest):
+class AuthenticatedTicketApiTest(BaseApiTest):
 
     def setUp(self):
         self.user = get_user_model().objects.create_user(
-            email="test@test.com", password="test1234"
+            email="test@mail.com", password="test1234"
         )
         self.client.force_authenticate(self.user)
         self.airplane_type = AirplaneType.objects.create(name="test_air_type")
@@ -67,29 +68,28 @@ class AuthenticatedOrderApiTests(BaseApiTest):
                 0,
             ),
         )
-        self.ticket = Ticket.objects.create(row=7, seat=9, flight=self.flight)
+        self.first_ticket = Ticket.objects.create(row=7, seat=9, flight=self.flight)
+        self.second_ticket = Ticket.objects.create(row=8, seat=10, flight=self.flight)
         self.order = Order.objects.create(
             user=self.user,
         )
-        self.order.tickets.add(self.ticket)
+        self.order.tickets.add(self.first_ticket, self.second_ticket)
 
-    def test_create_order_without_tickets(self):
-        payload = {"tickets": []}
-        response = self.client.post(ORDER_URL, payload, format="json")
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    def test_ticket_list(self):
+        response = self.client.get(TICKET_URL)
+        tickets = Ticket.objects.all()
+        serializer = TicketSerializer(tickets, many=True)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data["results"], serializer.data)
 
-    def test_create_order_with_tickets(self):
-        payload = {"tickets": [{"row": 4, "seat": 5, "flight": self.flight.id}]}
+    def test_create_ticket_not_allowed(self):
+        payload = {"row": 2, "seat": 2, "flight": self.flight.id}
+        response = self.client.post(TICKET_URL, payload, format="json")
+        self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
-        response = self.client.post(ORDER_URL, payload, format="json")
-        order = Order.objects.get(id=response.data["id"])
-        serializer = OrderListSerializer(order)
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(response.data, serializer.data)
-
-    def test_retrieve_order(self):
-        url = get_retrieve_order_url(self.order.id)
+    def test_retrieve_ticket(self):
+        url = get_retrieve_ticket_url(self.first_ticket.id)
+        serializer = TicketSerializer(self.first_ticket)
         response = self.client.get(url)
-        serializer = OrderListSerializer(self.order)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data, serializer.data)
