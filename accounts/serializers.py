@@ -4,6 +4,10 @@ from django.utils.translation import gettext as _
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    Serializer for the User model.
+    """
+
     class Meta:
         model = get_user_model()
         fields = ("id", "email", "password", "is_staff")
@@ -18,11 +22,30 @@ class UserSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
-        """Create a new user with encrypted password and return it"""
+        """
+        Create a new user with an encrypted password and return it.
+
+        Args:
+            validated_data (dict): Validated data for user creation.
+
+        Returns:
+            User: The created user instance.
+        """
+
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
-        """Update a user, set the password correctly and return it"""
+        """
+        Update a user, set the password correctly, and return it.
+
+        Args:
+            instance (User): The existing user instance.
+            validated_data (dict): Validated data for user update.
+
+        Returns:
+            User: The updated user instance.
+        """
+
         password = validated_data.pop("password", None)
         user = super().update(instance, validated_data)
         if password:

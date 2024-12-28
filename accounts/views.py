@@ -6,10 +6,18 @@ from accounts.serializers import UserSerializer
 
 
 class CreateUserView(generics.CreateAPIView):
+    """
+    View for creating a new user.
+    """
+
     serializer_class = UserSerializer
 
 
 class ManageUserView(generics.RetrieveUpdateAPIView):
+    """
+    View for managing the authenticated user.
+    """
+
     serializer_class = UserSerializer
     authentication_classes = (JWTAuthentication,)
     permission_classes = (IsAuthenticated,)

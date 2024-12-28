@@ -9,6 +9,11 @@ from airport.models import (
 
 
 class AirplaneFilter(filters.FilterSet):
+    """
+    Filter class for the Airplane model.
+
+    Allows filtering of airplanes based on their name using the 'icontains' lookup expression.
+    """
 
     name = filters.CharFilter(field_name="name", lookup_expr="icontains")
 
@@ -18,6 +23,12 @@ class AirplaneFilter(filters.FilterSet):
 
 
 class RouteFilter(filters.FilterSet):
+    """
+    Filter class for the Route model.
+
+    Allows filtering of routes based on the source and destination airports' closest big city
+    using the 'icontains' lookup expression for both fields.
+    """
 
     source = filters.CharFilter(
         field_name="source__closest_big_city", lookup_expr="icontains"
@@ -32,6 +43,12 @@ class RouteFilter(filters.FilterSet):
 
 
 class AirportFilter(filters.FilterSet):
+    """
+    Filter class for the Airport model.
+
+    Allows filtering of airports based on their name or closest big city
+    using the 'icontains' lookup expression for both fields.
+    """
 
     name = filters.CharFilter(field_name="name", lookup_expr="icontains")
     city = filters.CharFilter(field_name="closest_big_city", lookup_expr="icontains")
@@ -42,6 +59,11 @@ class AirportFilter(filters.FilterSet):
 
 
 class AirplaneTypeFilter(filters.FilterSet):
+    """
+    Filter class for the AirplaneType model.
+
+    Allows filtering of airplane types based on their name using the 'icontains' lookup expression.
+    """
 
     name = filters.CharFilter(field_name="name", lookup_expr="icontains")
 

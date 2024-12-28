@@ -16,26 +16,52 @@ from management.models import (
     Order,
     Ticket
 )
-from management.serializers import OrderListSerializer
+from management.serializers import (
+    OrderListSerializer,
+    OrderSerializer
+)
 
 
 ORDER_URL = reverse("management:orders-list")
 
-
 def get_retrieve_order_url(order_id: int):
+    """
+    Returns the URL for retrieving a specific order by its ID.
+
+    Args:
+        order_id (int): The ID of the order to retrieve.
+
+    Returns:
+        str: The URL for the order detail view.
+    """
+
     return reverse("management:orders-detail", args=(order_id,))
 
 
 class UnauthenticatedOrderApiTest(BaseApiTest):
+    """
+    Test suite for the order API without authentication.
+    """
 
     def test_auth_required(self):
+        """
+        Test that authentication is required to access the order API.
+        """
+
         response = self.client.get(ORDER_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class AuthenticatedOrderApiTests(BaseApiTest):
+    """
+    Test suite for the order API with authentication.
+    """
 
     def setUp(self):
+        """
+        Set up test data and authenticate the user.
+        """
+
         self.user = get_user_model().objects.create_user(
             email="test@test.com", password="test1234"
         )
@@ -76,11 +102,19 @@ class AuthenticatedOrderApiTests(BaseApiTest):
         self.order.tickets.add(self.ticket)
 
     def test_create_order_without_tickets(self):
+        """
+        Test creating an order without providing any tickets.
+        """
+
         payload = {"tickets": []}
         response = self.client.post(ORDER_URL, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_create_order_with_tickets(self):
+        """
+        Test creating an order with valid ticket information.
+        """
+
         payload = {"tickets": [{"row": 4, "seat": 5, "flight": self.flight.id}]}
 
         response = self.client.post(ORDER_URL, payload, format="json")
@@ -89,7 +123,61 @@ class AuthenticatedOrderApiTests(BaseApiTest):
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data, serializer.data)
 
+    def test_update_order_with_tickets(self):
+        """
+        Test updating an existing order by adding new tickets.
+        """
+        payload = {
+            "tickets": [
+                {"row": 4, "seat": 5, "flight": self.flight.id},
+                {"row": 3, "seat": 4, "flight": self.flight.id},
+            ]
+        }
+
+        url = get_retrieve_order_url(self.order.id)
+
+        response = self.client.put(url, payload, format="json")
+
+        self.order.refresh_from_db()
+        serializer = OrderSerializer(self.order)
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
+    def test_delete_order(self):
+        """
+        Test deleting an order.
+        """
+
+        order = Order.objects.create(
+            user=self.user,
+        )
+        order.tickets.add(self.ticket)
+
+        url = get_retrieve_order_url(order.id)
+
+        response = self.client.delete(url)
+
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+
+    def test_create_order_with_invalid_data_tickets(self):
+        """
+        Test that an order cannot be created with invalid ticket data.
+
+        This test ensures that when the ticket data in the order contains invalid
+        seat or row values (e.g., row 16 and seat 11, which are outside the valid
+        range for the flight), the API returns a 400 Bad Request status code, indicating
+        that the provided ticket information is not valid.
+        """
+        payload = {"tickets": [{"row": 16, "seat": 11, "flight": self.flight.id}]}
+        response = self.client.post(ORDER_URL, payload, format="json")
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
     def test_retrieve_order(self):
+        """
+        Test retrieving a specific order's details.
+        """
+
         url = get_retrieve_order_url(self.order.id)
         response = self.client.get(url)
         serializer = OrderListSerializer(self.order)

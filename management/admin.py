@@ -6,6 +6,7 @@ from management.models import (
     Order
 )
 
+
 admin.site.register(Flight)
 admin.site.register(Ticket)
 admin.site.register(Order)

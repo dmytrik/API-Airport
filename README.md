@@ -141,11 +141,6 @@ Follow these steps to set up the project locally:
 
 6. **Create env file:**
    - `ENVIRONMENT` local
-   - `POSTGRES_PASSWORD` airport 
-   - `POSTGRES_USER` airport
-   - `POSTGRES_DB` airport
-   - `POSTGRES_HOST` db
-   - `POSTGRES_PORT` 5432
 
 7. **Install the redis and run:**
    [Install Redis](https://redis.io/docs/latest/operate/oss_and_stack/install/install-redis/)
@@ -166,11 +161,11 @@ Follow these steps to set up the project in the Docker:
 
 2. **Create env file:**
    - `ENVIRONMENT` local
-   - `POSTGRES_PASSWORD` airport 
-   - `POSTGRES_USER` airport
-   - `POSTGRES_DB` airport
-   - `POSTGRES_HOST` db
-   - `POSTGRES_PORT` 5432
+   - `POSTGRES_PASSWORD`
+   - `POSTGRES_USER`
+   - `POSTGRES_DB`
+   - `POSTGRES_HOST`
+   - `POSTGRES_PORT` 
 
 3. **Run container:**
    ```bash

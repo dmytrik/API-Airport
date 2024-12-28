@@ -18,23 +18,47 @@ from management.models import (
 )
 from management.serializers import TicketSerializer
 
+
 TICKET_URL = reverse("management:tickets-list")
 
-
 def get_retrieve_ticket_url(ticket_id: int):
+    """
+    Returns the URL for retrieving a specific ticket by its ID.
+
+    Args:
+        ticket_id (int): The ID of the ticket to retrieve.
+
+    Returns:
+        str: The URL for the ticket detail view.
+    """
+
     return reverse("management:tickets-detail", args=(ticket_id,))
 
 
 class UnauthenticatedTicketApiTest(BaseApiTest):
+    """
+    Test suite for the ticket API without authentication.
+    """
 
     def test_auth_required(self):
+        """
+        Test that authentication is required to access the ticket API.
+        """
+
         response = self.client.get(TICKET_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 
 class AuthenticatedTicketApiTest(BaseApiTest):
+    """
+    Test suite for the ticket API with authentication.
+    """
 
     def setUp(self):
+        """
+        Set up test data and authenticate the user.
+        """
+
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -76,6 +100,10 @@ class AuthenticatedTicketApiTest(BaseApiTest):
         self.order.tickets.add(self.first_ticket, self.second_ticket)
 
     def test_ticket_list(self):
+        """
+        Test listing all tickets.
+        """
+
         response = self.client.get(TICKET_URL)
         tickets = Ticket.objects.all()
         serializer = TicketSerializer(tickets, many=True)
@@ -83,11 +111,19 @@ class AuthenticatedTicketApiTest(BaseApiTest):
         self.assertEqual(response.data["results"], serializer.data)
 
     def test_create_ticket_not_allowed(self):
+        """
+        Test that creating a ticket via the API is not allowed.
+        """
+
         payload = {"row": 2, "seat": 2, "flight": self.flight.id}
         response = self.client.post(TICKET_URL, payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
 
     def test_retrieve_ticket(self):
+        """
+        Test retrieving a specific ticket's details.
+        """
+
         url = get_retrieve_ticket_url(self.first_ticket.id)
         serializer = TicketSerializer(self.first_ticket)
         response = self.client.get(url)

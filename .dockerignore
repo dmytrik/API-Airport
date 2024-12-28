@@ -11,4 +11,5 @@
 **/docker-compose*
 **/compose.y*ml
 **/Dockerfile*
+dump.rdb
 README.md
