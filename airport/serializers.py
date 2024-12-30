@@ -50,13 +50,17 @@ class RouteSerializer(serializers.ModelSerializer):
 
 class RouteListDetailSerializer(RouteSerializer):
     """
-    Serializer for the Route model with detailed source and destination airport information.
+    Serializer for the Route model with detailed source
+    and destination airport information.
 
-    Inherits from RouteSerializer and adds detailed airport information by using the AirportSerializer.
+    Inherits from RouteSerializer and adds detailed airport
+    information by using the AirportSerializer.
 
     Fields:
-        - source: Detailed source airport information (using AirportSerializer).
-        - destination: Detailed destination airport information (using AirportSerializer).
+        - source: Detailed source airport information
+        (using AirportSerializer).
+        - destination: Detailed destination airport information
+        (using AirportSerializer).
     """
 
     source = AirportSerializer(read_only=True)
@@ -119,18 +123,31 @@ class AirplaneSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Airplane
-        fields = ("id", "name", "rows", "seats_in_row", "capacity", "airplane_type")
+        fields = (
+            "id",
+            "name",
+            "rows",
+            "seats_in_row",
+            "capacity",
+            "airplane_type"
+        )
         read_only_fields = ("id",)
 
 
 class AirplaneListDetailSerializer(AirplaneSerializer):
     """
-    Serializer for the Airplane model with detailed airplane type information.
+    Serializer for the Airplane model with detailed
+    airplane type information.
 
-    Inherits from AirplaneSerializer and adds the airplane type's name as a field.
+    Inherits from AirplaneSerializer and adds the
+    airplane type's name as a field.
 
     Fields:
-        - airplane_type: The name of the airplane type (read-only).
+        - airplane_type: The name of the airplane
+        type (read-only).
     """
 
-    airplane_type = serializers.CharField(source="airplane_type.name", read_only=True)
+    airplane_type = serializers.CharField(
+        source="airplane_type.name",
+        read_only=True
+    )

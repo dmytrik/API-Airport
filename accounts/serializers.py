@@ -31,7 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
         Returns:
             User: The created user instance.
         """
-
         return get_user_model().objects.create_user(**validated_data)
 
     def update(self, instance, validated_data):
@@ -45,7 +44,6 @@ class UserSerializer(serializers.ModelSerializer):
         Returns:
             User: The updated user instance.
         """
-
         password = validated_data.pop("password", None)
         user = super().update(instance, validated_data)
         if password:

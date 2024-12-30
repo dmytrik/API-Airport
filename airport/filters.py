@@ -12,7 +12,8 @@ class AirplaneFilter(filters.FilterSet):
     """
     Filter class for the Airplane model.
 
-    Allows filtering of airplanes based on their name using the 'icontains' lookup expression.
+    Allows filtering of airplanes based on their name
+    using the 'icontains' lookup expression.
     """
 
     name = filters.CharFilter(field_name="name", lookup_expr="icontains")
@@ -26,8 +27,9 @@ class RouteFilter(filters.FilterSet):
     """
     Filter class for the Route model.
 
-    Allows filtering of routes based on the source and destination airports' closest big city
-    using the 'icontains' lookup expression for both fields.
+    Allows filtering of routes based on the source and
+    destination airports' closest big city using
+    the 'icontains' lookup expression for both fields.
     """
 
     source = filters.CharFilter(
@@ -62,7 +64,8 @@ class AirplaneTypeFilter(filters.FilterSet):
     """
     Filter class for the AirplaneType model.
 
-    Allows filtering of airplane types based on their name using the 'icontains' lookup expression.
+    Allows filtering of airplane types based on their
+    name using the 'icontains' lookup expression.
     """
 
     name = filters.CharFilter(field_name="name", lookup_expr="icontains")

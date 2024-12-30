@@ -19,7 +19,6 @@ def get_retrieve_airplane_type_url(airplane_type_id: int) -> str:
     Returns:
         str: The URL for retrieving the airplane_type.
     """
-
     return reverse("airport:airplane-types-detail", args=(airplane_type_id,))
 
 
@@ -32,7 +31,6 @@ class UnauthenticatedAirplaneTypeApiTest(BaseApiTest):
         """
         Test that airplane_type API endpoints require authentication.
         """
-
         response = self.client.get(AIRPLANE_TYPE_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -46,7 +44,6 @@ class AuthenticatedAirplaneTypeApiTest(BaseApiTest):
         """
         Set up test data for authenticated airplane_type API tests.
         """
-
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -55,12 +52,14 @@ class AuthenticatedAirplaneTypeApiTest(BaseApiTest):
         self.second_airplane_type = AirplaneType.objects.create(
             name="test_air_type_second"
         )
+        self.payload = {
+            "name": "test_airplane_type",
+        }
 
     def test_list_airplane_type(self):
         """
         Test that authenticated users can list all airplane types.
         """
-
         response = self.client.get(AIRPLANE_TYPE_URL)
         airplane_types = AirplaneType.objects.all()
         serializer = AirplaneTypeSerializer(airplane_types, many=True)
@@ -71,7 +70,6 @@ class AuthenticatedAirplaneTypeApiTest(BaseApiTest):
         """
         Test that authenticated users can retrieve a specific airplane type by ID.
         """
-
         url = get_retrieve_airplane_type_url(self.airplane_type.id)
         serializer = AirplaneTypeSerializer(self.airplane_type)
         response = self.client.get(url)
@@ -82,7 +80,6 @@ class AuthenticatedAirplaneTypeApiTest(BaseApiTest):
         """
         Test that airplane_types can be filtered by name.
         """
-
         response = self.client.get(AIRPLANE_TYPE_URL, {"name": "second"})
         airplane_types = AirplaneType.objects.filter(name__icontains="second")
         serializer = AirplaneTypeSerializer(airplane_types, many=True)
@@ -92,36 +89,33 @@ class AuthenticatedAirplaneTypeApiTest(BaseApiTest):
         """
         Test that an authenticated user can't create a new airplane type.
         """
-
-        payload = {
-            "name": "test_airplane_type",
-        }
-        response = self.client.post(AIRPLANE_TYPE_URL, payload, format="json")
+        response = self.client.post(AIRPLANE_TYPE_URL, self.payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
 
 class AdminAirplaneTypeTests(BaseApiTest):
+    """
+    Test suite for airplane_type API access for admin.
+    """
 
     def setUp(self):
         """
         Set up test data for admin airplane_type API tests.
         """
-
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )
         self.client.force_authenticate(self.admin)
         self.airplane_type = AirplaneType.objects.create(name="airplane_type")
+        self.payload = {
+            "name": "test_airplane_type",
+        }
 
     def test_create_airplane_type(self):
         """
         Test that an admin user can create a new airplane type.
         """
-
-        payload = {
-            "name": "test_airplane_type",
-        }
-        response = self.client.post(AIRPLANE_TYPE_URL, payload, format="json")
+        response = self.client.post(AIRPLANE_TYPE_URL, self.payload, format="json")
         airplane_type = AirplaneType.objects.get(id=response.data["id"])
         serializer = AirplaneTypeSerializer(airplane_type)
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -131,23 +125,18 @@ class AdminAirplaneTypeTests(BaseApiTest):
         """
         Test that an admin user can update an airplane type resource.
         """
-
-        payload = {
-            "name": "updated_airplane_type",
-        }
         url = get_retrieve_airplane_type_url(self.airplane_type.id)
-        response = self.client.put(url, payload, format="json")
+        response = self.client.put(url, self.payload, format="json")
 
         self.airplane_type.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(self.airplane_type.name, "updated_airplane_type")
-        self.assertEqual(response.data["name"], "updated_airplane_type")
+        self.assertEqual(self.airplane_type.name, "test_airplane_type")
+        self.assertEqual(response.data["name"], "test_airplane_type")
 
     def test_delete_airplane_type(self):
         """
         Test that an admin user can delete an airplane type resource.
         """
-
         url = get_retrieve_airplane_type_url(self.airplane_type.id)
         response = self.client.delete(url)
 

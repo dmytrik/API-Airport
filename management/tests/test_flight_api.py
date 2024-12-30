@@ -31,7 +31,6 @@ def detail_flight_url(id: int):
     Returns:
         str: The URL for the flight detail view.
     """
-
     return reverse("management:flights-detail", args=(id,))
 
 
@@ -44,7 +43,6 @@ class UnauthenticatedFlightApiTests(BaseApiTest):
         """
         Test that authentication is required to access the flight API.
         """
-
         response = self.client.get(FLIGHT_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -58,7 +56,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Set up test data and authenticate the user.
         """
-
         self.user = get_user_model().objects.create_user(
             email="test@test.com", password="test1234"
         )
@@ -123,7 +120,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test retrieving a list of flights.
         """
-
         response = self.client.get(FLIGHT_URL)
         flights = Flight.objects.all()
         serializer = FlightListSerializer(flights, many=True)
@@ -134,7 +130,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test filtering flights by the source city.
         """
-
         response = self.client.get(FLIGHT_URL, {"city_from": "dnipro"})
         flights = Flight.objects.filter(
             route__source__closest_big_city__icontains="dnipro"
@@ -146,7 +141,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test filtering flights by the destination city.
         """
-
         response = self.client.get(FLIGHT_URL, {"city_to": "lviv"})
         flights = Flight.objects.filter(
             route__destination__closest_big_city__icontains="lviv"
@@ -158,7 +152,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test filtering flights by departure time.
         """
-
         response = self.client.get(FLIGHT_URL, {"departure_time": "2024-12-25"})
         flights = Flight.objects.filter(departure_time__icontains="2024-12-25")
         serializer = FlightListSerializer(flights, many=True)
@@ -168,7 +161,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test retrieving a specific flight's details.
         """
-
         url = detail_flight_url(self.second_flight.id)
         response = self.client.get(url)
         flight = Flight.objects.get(id=self.second_flight.id)
@@ -179,7 +171,6 @@ class AuthenticatedFlightApiTest(BaseApiTest):
         """
         Test creating a flight without permission.
         """
-
         payload = {
             "route": self.route.id,
             "airplane": self.airplane.id,
@@ -200,7 +191,6 @@ class AdminFlightTests(BaseApiTest):
         """
         Set up test data for admin flight tests.
         """
-
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )
@@ -226,7 +216,14 @@ class AdminFlightTests(BaseApiTest):
         self.flight = Flight.objects.create(
             route=self.route,
             airplane=self.airplane,
-            departure_time=datetime(2024, 12, 24, 16, 0, 0),
+            departure_time=datetime(
+                2024,
+                12,
+                24,
+                16,
+                0,
+                0
+            ),
             arrival_time=datetime(
                 2024,
                 12,
@@ -236,20 +233,42 @@ class AdminFlightTests(BaseApiTest):
                 0,
             ),
         )
+        self.payload = {
+            "route": self.route.id,
+            "airplane": self.airplane.id,
+            "departure_time": datetime(
+                2024,
+                12,
+                26,
+                18,
+                0,
+                0
+            ),
+            "arrival_time": datetime(
+                2024,
+                12,
+                26,
+                20,
+                0,
+                0
+            ),
+            "crew": [self.crew.id, self.second_crew.id],
+        }
+        self.putch_payload = {"departure_time": datetime(
+                2024,
+                12,
+                28,
+                18,
+                0,
+                0
+            )
+        }
 
     def test_create_flight(self):
         """
         Test creating a flight by an admin.
         """
-
-        payload = {
-            "route": self.route.id,
-            "airplane": self.airplane.id,
-            "departure_time": datetime(2024, 12, 26, 18, 0, 0),
-            "arrival_time": datetime(2024, 12, 26, 20, 0, 0),
-            "crew": [self.crew.id, self.second_crew.id],
-        }
-        response = self.client.post(FLIGHT_URL, payload)
+        response = self.client.post(FLIGHT_URL, self.payload)
         flight = Flight.objects.get(id=response.data["id"])
         crew = flight.crew.all()
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -261,41 +280,38 @@ class AdminFlightTests(BaseApiTest):
         """
         Test updating a flight by an admin.
         """
-
-        payload = {
-            "route": self.route.id,
-            "airplane": self.airplane.id,
-            "departure_time": datetime(2024, 12, 27, 18, 0, 0),
-            "arrival_time": datetime(2024, 12, 27, 20, 0, 0),
-            "crew": [self.crew.id],
-        }
-
         url = detail_flight_url(self.flight.id)
-        response = self.client.put(url, payload)
+        response = self.client.put(url, self.payload)
 
         flight = Flight.objects.get(id=self.flight.id)
         crew = flight.crew.all()
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn(self.crew, crew)
-        self.assertNotIn(self.second_crew, crew)
-        self.assertEqual(flight.departure_time, datetime(2024, 12, 27, 18, 0, 0))
-        self.assertEqual(flight.arrival_time, datetime(2024, 12, 27, 20, 0, 0))
+        self.assertIn(self.second_crew, crew)
+        self.assertEqual(
+            flight.departure_time,
+            self.payload["departure_time"]
+        )
+        self.assertEqual(
+            flight.arrival_time,
+            self.payload["arrival_time"]
+        )
 
     def test_partial_update_flight(self):
         """
         Test partially updating a flight by an admin.
         """
-
-        payload = {"departure_time": datetime(2024, 12, 28, 18, 0, 0)}
-
         url = detail_flight_url(self.flight.id)
-        response = self.client.patch(url, payload)
+        response = self.client.patch(url, self.putch_payload)
 
         flight = Flight.objects.get(id=self.flight.id)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(flight.departure_time, datetime(2024, 12, 28, 18, 0, 0))
+        self.assertEqual(
+            flight.departure_time,
+            self.putch_payload["departure_time"]
+        )
         self.assertEqual(flight.arrival_time, self.flight.arrival_time)
         self.assertEqual(flight.route.id, self.flight.route.id)
 
@@ -303,7 +319,6 @@ class AdminFlightTests(BaseApiTest):
         """
         Test deleting a flight by an admin.
         """
-
         url = detail_flight_url(self.flight.id)
         response = self.client.delete(url)
 

@@ -13,12 +13,16 @@ class Route(UUIDBaseModel):
     Model representing a route between two airports.
 
     Attributes:
-        source (ForeignKey): The source airport of the route.
-        destination (ForeignKey): The destination airport of the route.
-        distance (PositiveIntegerField): The distance of the route in kilometers or miles.
+        source (ForeignKey):
+            The source airport of the route.
+        destination (ForeignKey):
+            The destination airport of the route.
+        distance (PositiveIntegerField):
+            The distance of the route in kilometers or miles.
 
     Constraints:
-        Ensures that the source airport is not the same as the destination airport.
+        Ensures that the source airport is not the
+        same as the destination airport.
     """
 
     source = models.ForeignKey(
@@ -47,7 +51,8 @@ class Airport(UUIDBaseModel):
 
     Attributes:
         name (CharField): The name of the airport (unique).
-        closest_big_city (CharField): The closest large city to the airport.
+        closest_big_city (CharField):
+        The closest large city to the airport.
     """
 
     name = models.CharField(max_length=63, unique=True)
@@ -66,7 +71,8 @@ class Crew(UUIDBaseModel):
         last_name (CharField): The last name of the crew member.
 
     Properties:
-        full_name (str): The full name of the crew member (first name + last name).
+        full_name (str): The full name of
+        the crew member (first name + last name).
     """
 
     first_name = models.CharField(max_length=63)

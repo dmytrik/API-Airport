@@ -19,7 +19,6 @@ def get_retrieve_airplane_url(airplane_id: int) -> str:
     Returns:
         str: The URL for retrieving the airplane.
     """
-
     return reverse("airport:airplanes-detail", args=(airplane_id,))
 
 
@@ -32,7 +31,6 @@ class UnauthenticatedAirplaneApiTest(BaseApiTest):
         """
         Test that airplane API endpoints require authentication.
         """
-
         response = self.client.get(AIRPLANE_URL)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
@@ -46,7 +44,6 @@ class AuthenticatedAirplaneApiTest(BaseApiTest):
         """
         Set up test data for authenticated airplane API tests.
         """
-
         self.user = get_user_model().objects.create_user(
             email="test@mail.com", password="test1234"
         )
@@ -69,7 +66,6 @@ class AuthenticatedAirplaneApiTest(BaseApiTest):
         """
         Test that authenticated users can list all airplanes.
         """
-
         response = self.client.get(AIRPLANE_URL)
         airplanes = Airplane.objects.all()
         serializer = AirplaneListDetailSerializer(airplanes, many=True)
@@ -80,7 +76,6 @@ class AuthenticatedAirplaneApiTest(BaseApiTest):
         """
         Test that authenticated users can retrieve details of a specific airplane.
         """
-
         url = get_retrieve_airplane_url(self.airplane.id)
         serializer = AirplaneListDetailSerializer(self.airplane)
         response = self.client.get(url)
@@ -91,7 +86,6 @@ class AuthenticatedAirplaneApiTest(BaseApiTest):
         """
         Test that airplanes can be filtered by name.
         """
-
         response = self.client.get(AIRPLANE_URL, {"name": "second"})
         airplanes = Airplane.objects.filter(name__icontains="second")
         serializer = AirplaneListDetailSerializer(airplanes, many=True)
@@ -109,7 +103,6 @@ class AdminAirplaneTests(BaseApiTest):
         """
         Setup method to create an admin user and airplane type for testing.
         """
-
         self.admin = get_user_model().objects.create_superuser(
             email="admin@test.com", password="test1234"
         )
@@ -119,19 +112,19 @@ class AdminAirplaneTests(BaseApiTest):
         self.airplane = Airplane.objects.create(
             name="airplane", rows=22, seats_in_row=10, airplane_type=self.airplane_type
         )
-
-    def test_create_airplane(self):
-        """
-        Test that an admin user can create an airplane resource.
-        """
-
-        payload = {
+        self.payload = {
             "name": "test_airplane",
             "rows": 20,
             "seats_in_row": 10,
             "airplane_type": self.airplane_type.id,
         }
-        response = self.client.post(AIRPLANE_URL, payload, format="json")
+        self.putch_payload = payload = {"rows": 30}
+
+    def test_create_airplane(self):
+        """
+        Test that an admin user can create an airplane resource.
+        """
+        response = self.client.post(AIRPLANE_URL, self.payload, format="json")
         airplane = Airplane.objects.get(id=response.data["id"])
         serializer = AirplaneSerializer(airplane)
 
@@ -142,33 +135,24 @@ class AdminAirplaneTests(BaseApiTest):
         """
         Test that an admin user can update an airplane resource.
         """
-
-        payload = {
-            "name": "updated_airplane",
-            "rows": 25,
-            "seats_in_row": 12,
-            "airplane_type": self.airplane_type.id,
-        }
         url = get_retrieve_airplane_url(self.airplane.id)
-        response_update = self.client.put(url, payload, format="json")
+        response_update = self.client.put(url, self.payload, format="json")
 
         self.airplane.refresh_from_db()
         self.assertEqual(response_update.status_code, status.HTTP_200_OK)
-        self.assertEqual(self.airplane.name, "updated_airplane")
-        self.assertEqual(self.airplane.rows, 25)
-        self.assertEqual(self.airplane.seats_in_row, 12)
-        self.assertEqual(response_update.data["name"], "updated_airplane")
-        self.assertEqual(response_update.data["rows"], 25)
-        self.assertEqual(response_update.data["seats_in_row"], 12)
+        self.assertEqual(self.airplane.name, "test_airplane")
+        self.assertEqual(self.airplane.rows, 20)
+        self.assertEqual(self.airplane.seats_in_row, 10)
+        self.assertEqual(response_update.data["name"], "test_airplane")
+        self.assertEqual(response_update.data["rows"], 20)
+        self.assertEqual(response_update.data["seats_in_row"], 10)
 
     def test_partial_update_airplane(self):
         """
         Test that an admin user can partially update an airplane resource.
         """
-
-        payload = {"rows": 30}
         url = get_retrieve_airplane_url(self.airplane.id)
-        response_partial_update = self.client.patch(url, payload, format="json")
+        response_partial_update = self.client.patch(url, self.putch_payload, format="json")
 
         self.airplane.refresh_from_db()
         self.assertEqual(response_partial_update.status_code, status.HTTP_200_OK)
@@ -183,17 +167,7 @@ class AdminAirplaneTests(BaseApiTest):
         """
         Test that an admin user can delete an airplane resource.
         """
-
-        payload = {
-            "name": "test_airplane",
-            "rows": 20,
-            "seats_in_row": 10,
-            "airplane_type": self.airplane_type.id,
-        }
-        response_create = self.client.post(AIRPLANE_URL, payload, format="json")
-        airplane = Airplane.objects.get(id=response_create.data["id"])
-
-        url = get_retrieve_airplane_url(airplane.id)
+        url = get_retrieve_airplane_url(self.airplane.id)
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)

@@ -1,4 +1,3 @@
-from django.urls import path, include
 from rest_framework import routers
 
 from airport.views import (
@@ -20,4 +19,4 @@ router.register("airplane-types", AirplaneTypeViewSet, basename="airplane-types"
 router.register("crew", CrewViewSet, basename="crews")
 router.register("routers", RouteViewSet, basename="routers")
 
-urlpatterns = [path("", include(router.urls))]
+urlpatterns = router.urls
