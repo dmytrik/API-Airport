@@ -1,0 +1,1050 @@
+[
+    {
+        "model": "airport.airport",
+        "pk": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+        "fields": {
+            "name": "Los Angeles International Airport",
+            "closest_big_city": "Los Angeles"
+        }
+    },
+    {
+        "model": "airport.airport",
+        "pk": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+        "fields": {
+            "name": "John F. Kennedy International Airport",
+            "closest_big_city": "New York"
+        }
+    },
+    {
+        "model": "airport.airport",
+        "pk": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+        "fields": {
+            "name": "Heathrow Airport",
+            "closest_big_city": "London"
+        }
+    },
+    {
+        "model": "airport.airport",
+        "pk": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+        "fields": {
+            "name": "Charles de Gaulle Airport",
+            "closest_big_city": "Paris"
+        }
+    },
+    {
+        "model": "airport.airport",
+        "pk": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+        "fields": {
+            "name": "Tokyo Haneda Airport",
+            "closest_big_city": "Tokyo"
+        }
+    },
+    {
+        "model": "airport.airplanetype",
+        "pk": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22",
+        "fields": {
+            "name": "Commercial"
+        }
+    },
+    {
+        "model": "airport.airplane",
+        "pk": "4c43e24b-7438-4ffc-9cc0-b30a5e6332dd",
+        "fields": {
+            "name": "Boeing 737",
+            "rows": 30,
+            "seats_in_row": 6,
+            "airplane_type": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22"
+        }
+    },
+    {
+        "model": "airport.airplane",
+        "pk": "2d55e0aa-8d71-43de-9e16-bbef7c6c7361",
+        "fields": {
+            "name": "Airbus A320",
+            "rows": 40,
+            "seats_in_row": 8,
+            "airplane_type": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22"
+        }
+    },
+    {
+        "model": "airport.airplane",
+        "pk": "45c13dba-9f1c-4abb-8d53-4559e72f8875",
+        "fields": {
+            "name": "Boeing 777",
+            "rows": 50,
+            "seats_in_row": 10,
+            "airplane_type": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22"
+        }
+    },
+    {
+        "model": "airport.airplane",
+        "pk": "892452d2-3974-408f-a38a-84fd8873f03f",
+        "fields": {
+            "name": "Airbus A380",
+            "rows": 70,
+            "seats_in_row": 10,
+            "airplane_type": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22"
+        }
+    },
+    {
+        "model": "airport.airplane",
+        "pk": "91350660-739c-4009-b99d-f0b867e9f3b4",
+        "fields": {
+            "name": "Boeing 747",
+            "rows": 40,
+            "seats_in_row": 8,
+            "airplane_type": "9e5cd496-ed2d-4ace-8b03-bd00fca30d22"
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "e7e00752-4ab7-4d39-baf1-9b9e600d6a15",
+        "fields": {
+            "source": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "destination": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "distance": 1000
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "707d5bfd-c305-4419-bc6d-94553cf1d62f",
+        "fields": {
+            "source": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "destination": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "distance": 1100
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "ac971712-05f7-451a-a3f7-642ace51a443",
+        "fields": {
+            "source": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "destination": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "distance": 1200
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "96dfe5d5-7463-4324-9355-2794ee4fbb59",
+        "fields": {
+            "source": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "destination": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "distance": 1300
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "5dd07b48-2292-45f3-9726-749923b9d86b",
+        "fields": {
+            "source": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "destination": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "distance": 1400
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "4e4fb305-c55d-4e82-a3d1-0fb81e6d45d5",
+        "fields": {
+            "source": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "destination": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "distance": 1500
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "84fb8981-781a-4794-ae2a-0958c124c1f4",
+        "fields": {
+            "source": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "destination": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "distance": 1600
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "05d04756-ad5a-4f7b-bda0-27a76ed7404b",
+        "fields": {
+            "source": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "destination": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "distance": 1700
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "284abb86-2ad5-4b8e-9c4c-26326111d37e",
+        "fields": {
+            "source": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "destination": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "distance": 1800
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "55d892d3-ceb9-4a9c-9c3c-076d2f0ef566",
+        "fields": {
+            "source": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "destination": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "distance": 1900
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "2ca4de2d-e74d-4a96-8895-1d58af2d9843",
+        "fields": {
+            "source": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "destination": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "distance": 2000
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "920b8ece-95c8-4752-8ea3-e89eb0d125fb",
+        "fields": {
+            "source": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "destination": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "distance": 2100
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "12859947-69f1-4dc0-aca4-1787beb28b0d",
+        "fields": {
+            "source": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "destination": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "distance": 2200
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "e8900963-632b-4918-bb0e-be88c52b6a7b",
+        "fields": {
+            "source": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "destination": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "distance": 2300
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "853ddab2-8d50-4bba-9995-c8a86aef4002",
+        "fields": {
+            "source": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "destination": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "distance": 2400
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "d459698b-8d4e-4edb-9c2c-f3de5268de23",
+        "fields": {
+            "source": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "destination": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "distance": 2500
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "bfef661b-fbb7-46b1-a9f5-5b9d95ab3238",
+        "fields": {
+            "source": "af5b7cfb-669a-43ca-95bf-9d9c7d43c0e8",
+            "destination": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "distance": 2600
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "468c93e0-5cc0-4a77-9b07-47578490e771",
+        "fields": {
+            "source": "cee40ceb-03d5-4357-9ab6-1ae6bc39e14a",
+            "destination": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "distance": 2700
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "df31f6b6-facd-4c11-bec8-dcbb3c8409b6",
+        "fields": {
+            "source": "a4a9c713-131c-4ed3-85fe-8fb3425041e3",
+            "destination": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "distance": 2800
+        }
+    },
+    {
+        "model": "airport.route",
+        "pk": "1274579b-e7c6-47a9-9408-8d873491d19b",
+        "fields": {
+            "source": "ca6282cc-4d5c-40ca-8704-06ec92f11bf9",
+            "destination": "3c4ef45b-8474-4eab-ad32-c2df857a7a54",
+            "distance": 2900
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "2ddf13c1-8422-4b54-828b-eb4b93afbee6",
+        "fields": {
+            "route": "e7e00752-4ab7-4d39-baf1-9b9e600d6a15",
+            "airplane": "4c43e24b-7438-4ffc-9cc0-b30a5e6332dd",
+            "departure_time": "2024-01-01T00:00:00Z",
+            "arrival_time": "2024-01-01T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "abdb9b41-f00b-4f03-a6cb-f74fb2e314b1",
+        "fields": {
+            "route": "707d5bfd-c305-4419-bc6d-94553cf1d62f",
+            "airplane": "2d55e0aa-8d71-43de-9e16-bbef7c6c7361",
+            "departure_time": "2024-01-02T00:00:00Z",
+            "arrival_time": "2024-01-02T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "2c5b4b27-e2d5-4a65-85a3-54a67e9fa44c",
+        "fields": {
+            "route": "ac971712-05f7-451a-a3f7-642ace51a443",
+            "airplane": "45c13dba-9f1c-4abb-8d53-4559e72f8875",
+            "departure_time": "2024-01-03T00:00:00Z",
+            "arrival_time": "2024-01-03T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "9bc7c0fd-538a-4833-9560-ee130e1fd642",
+        "fields": {
+            "route": "96dfe5d5-7463-4324-9355-2794ee4fbb59",
+            "airplane": "892452d2-3974-408f-a38a-84fd8873f03f",
+            "departure_time": "2024-01-04T00:00:00Z",
+            "arrival_time": "2024-01-04T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "c7e2f67b-1e9f-4d6c-8099-7997789e36bd",
+        "fields": {
+            "route": "5dd07b48-2292-45f3-9726-749923b9d86b",
+            "airplane": "91350660-739c-4009-b99d-f0b867e9f3b4",
+            "departure_time": "2024-01-05T00:00:00Z",
+            "arrival_time": "2024-01-05T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "60e27662-ceea-48d8-9205-3461a791a461",
+        "fields": {
+            "route": "4e4fb305-c55d-4e82-a3d1-0fb81e6d45d5",
+            "airplane": "4c43e24b-7438-4ffc-9cc0-b30a5e6332dd",
+            "departure_time": "2024-01-06T00:00:00Z",
+            "arrival_time": "2024-01-06T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "d7f3aa31-caa5-42d8-8d3e-5b3d4065fe40",
+        "fields": {
+            "route": "84fb8981-781a-4794-ae2a-0958c124c1f4",
+            "airplane": "2d55e0aa-8d71-43de-9e16-bbef7c6c7361",
+            "departure_time": "2024-01-07T00:00:00Z",
+            "arrival_time": "2024-01-07T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "16bb8db3-ac05-4d60-85a6-f97c77754b08",
+        "fields": {
+            "route": "05d04756-ad5a-4f7b-bda0-27a76ed7404b",
+            "airplane": "45c13dba-9f1c-4abb-8d53-4559e72f8875",
+            "departure_time": "2024-01-08T00:00:00Z",
+            "arrival_time": "2024-01-08T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "dcdb0321-8385-4ea1-93e4-ba76a2827d72",
+        "fields": {
+            "route": "284abb86-2ad5-4b8e-9c4c-26326111d37e",
+            "airplane": "892452d2-3974-408f-a38a-84fd8873f03f",
+            "departure_time": "2024-01-09T00:00:00Z",
+            "arrival_time": "2024-01-09T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "83fcdbba-fa1b-47f2-9a53-e18a40112c8d",
+        "fields": {
+            "route": "55d892d3-ceb9-4a9c-9c3c-076d2f0ef566",
+            "airplane": "91350660-739c-4009-b99d-f0b867e9f3b4",
+            "departure_time": "2024-01-10T00:00:00Z",
+            "arrival_time": "2024-01-10T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "b770d8cd-0636-4002-a54b-8023440367d9",
+        "fields": {
+            "route": "2ca4de2d-e74d-4a96-8895-1d58af2d9843",
+            "airplane": "4c43e24b-7438-4ffc-9cc0-b30a5e6332dd",
+            "departure_time": "2024-01-11T00:00:00Z",
+            "arrival_time": "2024-01-11T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "e20d2b90-af49-4c1f-8585-fde626d53cc9",
+        "fields": {
+            "route": "920b8ece-95c8-4752-8ea3-e89eb0d125fb",
+            "airplane": "2d55e0aa-8d71-43de-9e16-bbef7c6c7361",
+            "departure_time": "2024-01-12T00:00:00Z",
+            "arrival_time": "2024-01-12T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "264781e5-3823-460d-bd89-de8d07749300",
+        "fields": {
+            "route": "12859947-69f1-4dc0-aca4-1787beb28b0d",
+            "airplane": "45c13dba-9f1c-4abb-8d53-4559e72f8875",
+            "departure_time": "2024-01-13T00:00:00Z",
+            "arrival_time": "2024-01-13T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "c75c2454-6423-48ce-a9de-caae7f1683ad",
+        "fields": {
+            "route": "e8900963-632b-4918-bb0e-be88c52b6a7b",
+            "airplane": "892452d2-3974-408f-a38a-84fd8873f03f",
+            "departure_time": "2024-01-14T00:00:00Z",
+            "arrival_time": "2024-01-14T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "fcabf9b5-d8b6-46e2-823c-3100f0da3139",
+        "fields": {
+            "route": "853ddab2-8d50-4bba-9995-c8a86aef4002",
+            "airplane": "91350660-739c-4009-b99d-f0b867e9f3b4",
+            "departure_time": "2024-01-15T00:00:00Z",
+            "arrival_time": "2024-01-15T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "932ed4a4-3ee4-43fa-a185-b0b90e8b0a04",
+        "fields": {
+            "route": "d459698b-8d4e-4edb-9c2c-f3de5268de23",
+            "airplane": "4c43e24b-7438-4ffc-9cc0-b30a5e6332dd",
+            "departure_time": "2024-01-16T00:00:00Z",
+            "arrival_time": "2024-01-16T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "d578cf04-16bd-40a4-a134-a7fe16743690",
+        "fields": {
+            "route": "bfef661b-fbb7-46b1-a9f5-5b9d95ab3238",
+            "airplane": "2d55e0aa-8d71-43de-9e16-bbef7c6c7361",
+            "departure_time": "2024-01-17T00:00:00Z",
+            "arrival_time": "2024-01-17T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "9ffe0859-b4d2-46cf-a70c-50d8b2cafd06",
+        "fields": {
+            "route": "468c93e0-5cc0-4a77-9b07-47578490e771",
+            "airplane": "45c13dba-9f1c-4abb-8d53-4559e72f8875",
+            "departure_time": "2024-01-18T00:00:00Z",
+            "arrival_time": "2024-01-18T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "9fb8b1ff-e3f2-4067-a868-7d476e64e277",
+        "fields": {
+            "route": "df31f6b6-facd-4c11-bec8-dcbb3c8409b6",
+            "airplane": "892452d2-3974-408f-a38a-84fd8873f03f",
+            "departure_time": "2024-01-19T00:00:00Z",
+            "arrival_time": "2024-01-19T05:00:00Z"
+        }
+    },
+    {
+        "model": "management.flight",
+        "pk": "541cc7f3-2037-4340-bdbd-2ae84677846f",
+        "fields": {
+            "route": "1274579b-e7c6-47a9-9408-8d873491d19b",
+            "airplane": "91350660-739c-4009-b99d-f0b867e9f3b4",
+            "departure_time": "2024-01-20T00:00:00Z",
+            "arrival_time": "2024-01-20T05:00:00Z"
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "874aab0b-0692-439c-ae5d-f0f24cb6bc78",
+        "fields": {
+            "email": "user0@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "8526d287-db46-403e-9f53-e13313ceb302",
+        "fields": {
+            "email": "user1@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "5df0ec03-2198-43dd-a594-78e2bfe505a8",
+        "fields": {
+            "email": "user2@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "62f508ac-2410-4084-b750-77190bb37ff7",
+        "fields": {
+            "email": "user3@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "2e064e46-f59a-4f75-aa98-7e8f46104aa0",
+        "fields": {
+            "email": "user4@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "77c0ce6f-9c78-4131-a635-92cafe93be81",
+        "fields": {
+            "email": "user5@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "67d8cab7-3a91-4047-938d-e58252a5be2b",
+        "fields": {
+            "email": "user6@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "7a49040b-324e-43bc-80f5-fed783ed3816",
+        "fields": {
+            "email": "user7@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "e316ec79-25c7-437d-bc46-09e8ad1cd75a",
+        "fields": {
+            "email": "user8@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "a15fb654-dfe0-46c7-90bc-12b4311965ae",
+        "fields": {
+            "email": "user9@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "57f73068-f90e-4eae-925b-327fd3733cd6",
+        "fields": {
+            "email": "user10@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "9766ac77-0920-4d07-8e0d-0c865e36b287",
+        "fields": {
+            "email": "user11@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "7f9e7c4c-52ba-46a8-85a4-f5374f71b420",
+        "fields": {
+            "email": "user12@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "c4b03a13-9cb4-46e2-806b-0d3d72fbefd7",
+        "fields": {
+            "email": "user13@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "4929ceda-0e56-4d9e-800c-d33e050573a4",
+        "fields": {
+            "email": "user14@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "c3eacf22-a595-4f5d-915f-770d55ce1831",
+        "fields": {
+            "email": "user15@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "01b274ec-dfcf-46cd-8dc1-98583b6121ac",
+        "fields": {
+            "email": "user16@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "0f0cde55-ccec-4bfe-92a6-2ed83dc7f45a",
+        "fields": {
+            "email": "user17@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "a9665ab5-f66f-4642-bab8-5fc75572c744",
+        "fields": {
+            "email": "user18@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "7aa91e47-eb2d-4446-8331-68d196c9a269",
+        "fields": {
+            "email": "user19@example.com",
+            "password": "hashed_password",
+            "is_active": true,
+            "is_staff": false
+        }
+    },
+    {
+        "model": "accounts.user",
+        "pk": "5700a330191b4b3c835beaf75955fcd6",
+        "fields": {
+            "email": "airport@admin.com",
+            "password": "pbkdf2_sha256$870000$dTiW5JPQi3Lc1wim1oGzRX$UuyjLnMzLmieGTmu5SvDlK5tpLGdtqmowfMzP//Nexw=",
+            "is_active": true,
+            "is_staff": true,
+            "is_superuser": true
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "c409f242-8777-4eab-bee8-fdd23b39d9c8",
+        "fields": {
+            "user": "874aab0b-0692-439c-ae5d-f0f24cb6bc78",
+            "created_at": "2024-01-01T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "14b7f65d-f1a1-4cc0-b4ad-b7df2567b4e1",
+        "fields": {
+            "user": "8526d287-db46-403e-9f53-e13313ceb302",
+            "created_at": "2024-01-02T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "50145333-786c-4f69-9c81-db3e7973f541",
+        "fields": {
+            "user": "5df0ec03-2198-43dd-a594-78e2bfe505a8",
+            "created_at": "2024-01-03T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "bc0433db-0455-431d-ae22-bb50c822e876",
+        "fields": {
+            "user": "5700a330191b4b3c835beaf75955fcd6",
+            "created_at": "2024-01-04T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "99bf4a56-f881-47c1-8f7a-6c61d6e04ef7",
+        "fields": {
+            "user": "2e064e46-f59a-4f75-aa98-7e8f46104aa0",
+            "created_at": "2024-01-05T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "c0bf7a1a-6ae3-4905-9a16-dabd961624f4",
+        "fields": {
+            "user": "77c0ce6f-9c78-4131-a635-92cafe93be81",
+            "created_at": "2024-01-06T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "2bd61180-cf39-4e70-864c-a4ddb8f20940",
+        "fields": {
+            "user": "5700a330191b4b3c835beaf75955fcd6",
+            "created_at": "2024-01-07T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "50bd4794-f410-496b-bc90-f96cd7775fd7",
+        "fields": {
+            "user": "7a49040b-324e-43bc-80f5-fed783ed3816",
+            "created_at": "2024-01-08T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "ada34895-6470-43a7-afc4-884b666ff638",
+        "fields": {
+            "user": "5700a330191b4b3c835beaf75955fcd6",
+            "created_at": "2024-01-09T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "24affc08-2a36-46d5-a6cf-97d31a89759d",
+        "fields": {
+            "user": "a15fb654-dfe0-46c7-90bc-12b4311965ae",
+            "created_at": "2024-01-10T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "ff1ea70a-2120-4ecc-8a6a-8f1c29aced0d",
+        "fields": {
+            "user": "57f73068-f90e-4eae-925b-327fd3733cd6",
+            "created_at": "2024-01-11T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "af9dfe4f-0cbb-4c7a-a695-dd86445edbee",
+        "fields": {
+            "user": "5700a330191b4b3c835beaf75955fcd6",
+            "created_at": "2024-01-12T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "d4231886-5fbd-49f2-9f68-f14235553d98",
+        "fields": {
+            "user": "7f9e7c4c-52ba-46a8-85a4-f5374f71b420",
+            "created_at": "2024-01-13T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "e6b33286-330e-478b-aab7-e8ef97835c2f",
+        "fields": {
+            "user": "c4b03a13-9cb4-46e2-806b-0d3d72fbefd7",
+            "created_at": "2024-01-14T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "b69773b2-b201-4ff5-9cc9-6a04cb5d25b4",
+        "fields": {
+            "user": "4929ceda-0e56-4d9e-800c-d33e050573a4",
+            "created_at": "2024-01-15T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "326a196b-2404-4435-9e38-ea98154b45e8",
+        "fields": {
+            "user": "c3eacf22-a595-4f5d-915f-770d55ce1831",
+            "created_at": "2024-01-16T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "c7b0f79f-108b-4a7b-a4dc-e161fbe383ba",
+        "fields": {
+            "user": "01b274ec-dfcf-46cd-8dc1-98583b6121ac",
+            "created_at": "2024-01-17T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "933b5bf6-c758-4a29-92ea-6c7cdb8de6bb",
+        "fields": {
+            "user": "0f0cde55-ccec-4bfe-92a6-2ed83dc7f45a",
+            "created_at": "2024-01-18T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "59ddc582-4021-43a2-a1fc-1df7e906d328",
+        "fields": {
+            "user": "a9665ab5-f66f-4642-bab8-5fc75572c744",
+            "created_at": "2024-01-19T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.order",
+        "pk": "ef006eb0-d579-4587-9c8f-f27023a8a0bc",
+        "fields": {
+            "user": "7aa91e47-eb2d-4446-8331-68d196c9a269",
+            "created_at": "2024-01-20T00:00:00Z"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "d6cea8d8-5f6b-44a5-90ab-a70314b6e30b",
+        "fields": {
+            "row": 1,
+            "seat": 1,
+            "flight": "2ddf13c1-8422-4b54-828b-eb4b93afbee6",
+            "order": "c409f242-8777-4eab-bee8-fdd23b39d9c8"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "fa1becbc-f0c8-4402-a8eb-89bbba51f796",
+        "fields": {
+            "row": 2,
+            "seat": 2,
+            "flight": "abdb9b41-f00b-4f03-a6cb-f74fb2e314b1",
+            "order": "14b7f65d-f1a1-4cc0-b4ad-b7df2567b4e1"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "fd5e96e8-0487-446e-b6e3-4a68ba2a7bd8",
+        "fields": {
+            "row": 3,
+            "seat": 3,
+            "flight": "2c5b4b27-e2d5-4a65-85a3-54a67e9fa44c",
+            "order": "50145333-786c-4f69-9c81-db3e7973f541"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "4ca8b638-f19f-4c0d-97d4-5c4735ab1c06",
+        "fields": {
+            "row": 4,
+            "seat": 4,
+            "flight": "9bc7c0fd-538a-4833-9560-ee130e1fd642",
+            "order": "bc0433db-0455-431d-ae22-bb50c822e876"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "251b315e-943b-41eb-bc5d-21bbc9333389",
+        "fields": {
+            "row": 5,
+            "seat": 5,
+            "flight": "c7e2f67b-1e9f-4d6c-8099-7997789e36bd",
+            "order": "99bf4a56-f881-47c1-8f7a-6c61d6e04ef7"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "c1d64b9f-9771-4e86-8406-d46d7b24fb09",
+        "fields": {
+            "row": 6,
+            "seat": 6,
+            "flight": "60e27662-ceea-48d8-9205-3461a791a461",
+            "order": "c0bf7a1a-6ae3-4905-9a16-dabd961624f4"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "cc2837c6-0b98-47fd-8da3-360e2dc39fa5",
+        "fields": {
+            "row": 7,
+            "seat": 1,
+            "flight": "d7f3aa31-caa5-42d8-8d3e-5b3d4065fe40",
+            "order": "2bd61180-cf39-4e70-864c-a4ddb8f20940"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "b0d779e7-208a-4388-9a60-ac8d354cc280",
+        "fields": {
+            "row": 8,
+            "seat": 2,
+            "flight": "16bb8db3-ac05-4d60-85a6-f97c77754b08",
+            "order": "50bd4794-f410-496b-bc90-f96cd7775fd7"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "176ae2a0-b503-488d-aad4-866d26555a01",
+        "fields": {
+            "row": 9,
+            "seat": 3,
+            "flight": "dcdb0321-8385-4ea1-93e4-ba76a2827d72",
+            "order": "ada34895-6470-43a7-afc4-884b666ff638"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "ee2c22b1-e296-487f-893a-2ce8513a9faf",
+        "fields": {
+            "row": 10,
+            "seat": 4,
+            "flight": "83fcdbba-fa1b-47f2-9a53-e18a40112c8d",
+            "order": "24affc08-2a36-46d5-a6cf-97d31a89759d"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "a34ce55c-e2a4-4cea-99bc-1e52bca40417",
+        "fields": {
+            "row": 11,
+            "seat": 5,
+            "flight": "b770d8cd-0636-4002-a54b-8023440367d9",
+            "order": "ff1ea70a-2120-4ecc-8a6a-8f1c29aced0d"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "76f898ba-30d6-448a-a4f1-8bd3b6d5948c",
+        "fields": {
+            "row": 12,
+            "seat": 6,
+            "flight": "e20d2b90-af49-4c1f-8585-fde626d53cc9",
+            "order": "af9dfe4f-0cbb-4c7a-a695-dd86445edbee"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "56519413-971d-4258-be16-37f3e8cf45fd",
+        "fields": {
+            "row": 13,
+            "seat": 1,
+            "flight": "264781e5-3823-460d-bd89-de8d07749300",
+            "order": "d4231886-5fbd-49f2-9f68-f14235553d98"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "e8e10b78-14ae-4f71-b67b-b85800f9d376",
+        "fields": {
+            "row": 14,
+            "seat": 2,
+            "flight": "c75c2454-6423-48ce-a9de-caae7f1683ad",
+            "order": "e6b33286-330e-478b-aab7-e8ef97835c2f"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "3d920889-6e98-4a6c-ad26-3b1c45d0a91e",
+        "fields": {
+            "row": 15,
+            "seat": 3,
+            "flight": "fcabf9b5-d8b6-46e2-823c-3100f0da3139",
+            "order": "b69773b2-b201-4ff5-9cc9-6a04cb5d25b4"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "1374d03d-b0b7-4058-b8d2-2aa5dafd80a3",
+        "fields": {
+            "row": 16,
+            "seat": 4,
+            "flight": "932ed4a4-3ee4-43fa-a185-b0b90e8b0a04",
+            "order": "326a196b-2404-4435-9e38-ea98154b45e8"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "edd7654b-f069-4068-8dd0-a7ffa94d3f2a",
+        "fields": {
+            "row": 17,
+            "seat": 5,
+            "flight": "d578cf04-16bd-40a4-a134-a7fe16743690",
+            "order": "c7b0f79f-108b-4a7b-a4dc-e161fbe383ba"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "4d1191e7-a3e8-4037-a171-59b81f6d9d44",
+        "fields": {
+            "row": 18,
+            "seat": 6,
+            "flight": "9ffe0859-b4d2-46cf-a70c-50d8b2cafd06",
+            "order": "933b5bf6-c758-4a29-92ea-6c7cdb8de6bb"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "eb9ba71d-19a2-484f-b7c8-e34fa89748c4",
+        "fields": {
+            "row": 19,
+            "seat": 1,
+            "flight": "9fb8b1ff-e3f2-4067-a868-7d476e64e277",
+            "order": "59ddc582-4021-43a2-a1fc-1df7e906d328"
+        }
+    },
+    {
+        "model": "management.ticket",
+        "pk": "8e1fa907-0498-4c2e-87e4-bbd0e6de2f3e",
+        "fields": {
+            "row": 20,
+            "seat": 2,
+            "flight": "541cc7f3-2037-4340-bdbd-2ae84677846f",
+            "order": "ef006eb0-d579-4587-9c8f-f27023a8a0bc"
+        }
+    }
+]
